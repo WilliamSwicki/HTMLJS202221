@@ -3,6 +3,41 @@
     <head>
         <meta charset="UTF-8">
         <title>Week 2 Lab</title>
+        <!--example of in doc style sheet-->
+        <style>
+            /*This is a css comment*/
+            /*we are going to write some css here*/
+            p,li,ol{
+                color:rgb(55, 0, 255);
+                font-family: 'Times New Roman', Times, serif;
+            }
+            h3,h2,h5{
+                color: aqua;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                background-color: forestgreen;
+                text-align: center;
+                border: 2px solid limegreen;
+                border-radius: 5px;
+            }
+            body{
+                background-color: forestgreen;
+                background-image: url(images/background.png);
+            }
+            a:link{
+                color:darkblue;
+                text-decoration: none;
+            }
+            a:visited{
+                color: darkblue;
+                text-decoration: none;
+            }
+            a:hover{
+                text-decoration: underline;
+            }
+            a:active{
+                color: aqua;
+            }
+        </style>
     </head>
     <body>
         <!--This is a header 1 element-->
@@ -22,13 +57,13 @@
         <h2>Class's Favorite Fast Food</h2>
         <ul>
             <li>McDonald's</li>
-            <li>Chick-fil-a</li>
+            <li><b>Chick-fil-a</b></li>
             <li>Dunkin</li>
             <li>Five Guys</li>
             <li>Subway</li>
             <li>Wendy's</li>
             <li>Popeyes</li>
-            <li>Taco Bell</li>
+            <li><i>Taco Bell</i></li>
             <li>KFC</li>
             <li>Sonic</li>
             <li>Friendly's</li>
@@ -39,17 +74,17 @@
             <li>Ledend of Zelda Breath of the Wild</li>
             <li>Hallow Knight</li>
             <li>Rocket League</li>
-            <li>Valorant</li>
+            <li><strong>Valorant</strong></li>
             <li>Fortnite</li>
             <li>Call of Duty Black Ops 2</li>
             <li>Mario Odessey</li>
-            <li>God of War</li>
+            <li style="color:red">God of War</li>
             <li>Leauge of Legends</li>
             <li>Grand Theft Auto V</li>
             <li>Super Smash Bros</li>
-            <li>Minecraft</li>
+            <li><em>Minecraft</em></li>
         </ol>
-        <p style="color:rgb(100, 0, 100); font-family: Verdana, Geneva, Tahoma, sans-serif;">Bacon ipsum dolor amet spare ribs meatloaf ground round turkey. Pig beef ribs capicola, pork chop boudin chicken kielbasa ground round chislic short ribs shank alcatra shoulder pork belly bresaola. Hamburger shank chislic venison, capicola picanha burgdoggen biltong leberkas alcatra tongue short loin salami pig chuck. Pork chop bacon kevin meatball pig pork loin pastrami fatback rump t-bone cow buffalo andouille ribeye.</p>
+        <p style="color:rgb(100, 0, 100); font-family: Verdana, Geneva, Tahoma, sans-serif;"><strong>Bacon ipsum dolor</strong> amet spare ribs meatloaf ground round turkey. <em>Pig beef ribs capicola, pork chop boudin chicken</em> <i>kielbasa ground round chislic short ribs</i> shank alcatra shoulder pork belly bresaola. <b>Hamburger shank</b> chislic venison, capicola picanha burgdoggen biltong leberkas alcatra tongue short loin salami pig chuck. Pork chop bacon kevin meatball pig pork loin pastrami fatback rump t-bone cow buffalo andouille ribeye.</p>
         <br>
         <!--Example of image element-->
         <img src="images/hungreybox.jpeg" alt="Picture of hungreybox" width="300">
