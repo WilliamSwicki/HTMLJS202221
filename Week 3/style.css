@@ -24,3 +24,19 @@ ul{
     background-color: rgb(66, 72, 78);
     border: 5px dashed skyblue;
 }
+a:link{
+    color: red;
+    text-decoration: none;
+}
+a:visited{
+    color: red;
+    text-decoration: none;
+}
+a:hover{
+    color: limegreen;
+    text-decoration: underline;
+}
+a:active{
+    color: limegreen;
+    text-decoration: underline;
+}
