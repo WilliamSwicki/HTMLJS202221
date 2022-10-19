@@ -1,0 +1,13 @@
+body{
+    background-color: blueviolet;
+}
+p{
+    font-family: Arial, Helvetica, sans-serif;
+    color: lime;
+}
+a:link{
+    color:blue;
+}
+a:visited{
+    color:blue;
+}
