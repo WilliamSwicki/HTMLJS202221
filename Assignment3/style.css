@@ -1,0 +1,25 @@
+body{
+    background-image: url(images/woodplankbackground.png);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    color: rgb(53, 117, 255);
+}
+.container{
+    width: 970px;
+    padding: 10px;
+}
+h1{
+    width: 950px;
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(201, 187, 63);
+    border: solid rgb(112, 69, 63);
+}
+.sections{
+    width: 950px;
+    padding: 10px;
+    background-color: rgb(201, 187, 63);
+}
+img{
+    border: solid rgb(112, 69, 63) 10px;
+}
