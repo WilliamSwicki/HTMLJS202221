@@ -51,7 +51,9 @@ nav{
     background-color: rgb(174, 174, 174);
 }
 article{
-    width: 100%;
+    margin:auto;
+    margin-bottom: 5px;
+    width: 90%;
     height: 300px;
     border: solid 2px black;
 }
