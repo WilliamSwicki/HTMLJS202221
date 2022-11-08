@@ -31,6 +31,9 @@ header{
         font-family: fancy;
         src: url(fonts/Ancient_Medium.ttf);
     }
+p,.btn,li{
+    font-family: 'Poor Story', cursive;
+}
 h1,h2{
     font-family: fancy;
     color: black;
