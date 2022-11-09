@@ -1,0 +1,15 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+canvas{
+    border:1px solid black;
+}
+nav, h1{
+    text-align: center;
+}
+nav{
+    padding-bottom: 5px;
+    margin: 0px;
+}
