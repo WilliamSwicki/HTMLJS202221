@@ -2,22 +2,29 @@
 var canvas = document.getElementById("c");
 var ctx = canvas.getContext("2d");
 
-ctx.font = "40px Arial";
-ctx.fillText("Welcom to RPS Game!", 200, 50);
+ctx.font = "40px Calibri";
+ctx.fillStyle = "Blue";
+ctx.strokeStyle = "#001287";
+ctx.lineWidth = 2;
+alignText("Welcom to RPS Game!", 400, 50, "blue");
+ctx.strokeText("Welcom to RPS Game!", 400, 50);
 //Array datatype arrays need "[]"
 //var rps = ["Rock",'Paper',"Scissors"];
 var rps = new Array("Rock", "Paper", "Scissors");
 
 document.getElementById("rock").addEventListener('click', function (e) {
-    alert("You clicked " + rps[0]);
+    ctx.clearRect(0,70,800,600)
+    alignText("You clicked " + rps[0], 400, 100, "blue");
     playGame(rps[0]);
 });
 document.getElementById("paper").addEventListener('click', function (e) {
-    alert("You clicked " + rps[1]);
+    ctx.clearRect(0,70,800,600)
+    alignText("You clicked " + rps[1], 400, 100, "blue");
     playGame(rps[1]);
 });
 document.getElementById("scissors").addEventListener('click', function (e) {
-    alert("You clicked " + rps[2]);
+    ctx.clearRect(0,70,800,600)
+    alignText("You clicked " + rps[2], 400, 100, "blue");
     playGame(rps[2]);
 });
 
@@ -29,38 +36,52 @@ function playGame(playerChoise) {
         case "Rock":
             if (cpuChoise == 0) {
                 //its a tie
-                alert("CPU chose Rock. It's a tie!")
+                alignText("CPU chose Rock.", 400, 200, "red")
+                alignText("It's a tie!", 400, 400, "black")
             }
             else if (cpuChoise == 1) {
-                alert('CPU chose Paper. CPU wins!')
+                alignText('CPU chose Paper.', 400, 200, "red")
+                alignText('CPU wins!', 400, 400, "red")
             }
             else{
-                alert("CPU chose Scissors. You win!")
+                alignText("CPU chose Scissors.", 400, 200, "red")
+                alignText(" You win!", 400, 400, "blue")
             }
             break;
         case "Paper":
             if (cpuChoise == 0) {
                 //its a tie
-                alert("CPU chose Rock. You win!")
+                alignText("CPU chose Rock.", 400, 200, "red")
+                alignText("You win!", 400, 400, "blue")
             }
             else if (cpuChoise == 1) {
-                alert("CPU chose Paper. It's a tie!")
+                alignText("CPU chose Paper.", 400, 200, "red")
+                alignText("It's a tie!", 400, 400, "black")
             }
             else {
-                alert("CPU chose Scissors. CPU wins!")
+                alignText("CPU chose Scissors.", 400, 200, "red")
+                alignText("CPU wins!", 400, 400, "red")
             }
             break;
         case "Scissors":
             if (cpuChoise == 0) {
                 //its a tie
-                alert("CPU chose Rock. CPU wins!")
+                alignText("CPU chose Rock.", 400, 200, "red")
+                alignText("CPU wins!", 400, 400, "red")
             }
             else if (cpuChoise == 1) {
-                alert('CPU chose Paper. You win!')
+                alignText('CPU chose Paper.', 400, 200, "red")
+                alignText('You win!', 400, 400, "blue")
             }
             else {
-                alert("CPU chose Scissors. It's a tie!")
+                alignText("CPU chose Scissors.", 400, 200, "red")
+                alignText("It's a tie!", 400, 400, "black")
             }
             break;
     }
+}
+function alignText(text,x ,y, color){
+    ctx.fillStyle = color
+    ctx.textAlign = "center";
+    ctx.fillText(text,x ,y)
 }
