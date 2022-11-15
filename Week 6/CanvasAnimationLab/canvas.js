@@ -30,17 +30,7 @@ function main(){
     //create condition when the object is off screen
     createCanvasBoundary(x, canvas.width, radius, "speedX");
     createCanvasBoundary(y, canvas.height, radius, "speedY");
-    /*if(speedX > 10){
-        speedX = 2
-    }
-    else{
-        x > 750
-        speedX = -2
-    }
-    if(speedY > 10){
-        speedY = 2
-    }
-    */
+    
 
     //update the animation frame
     timer = requestAnimationFrame(main);
@@ -58,10 +48,10 @@ function drawCircle(color, posX, posY, radius){
 function createCanvasBoundary(position, canvasSize, objectRadius, direction){
     if(position > canvasSize - objectRadius || position < objectRadius){
         if(direction == "speedX"){
-            speedX *= -1.05
+            speedX *= -1
         }
         else{
-            speedY *=-1.05
+            speedY *=-1
         }
     }
 }
