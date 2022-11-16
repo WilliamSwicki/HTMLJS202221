@@ -2,6 +2,9 @@
 var canvas = document.getElementById("c");
 var ctx = canvas.getContext("2d");
 
+var wins = 0
+var loss = 0
+
 var rock = new Image();
 var paper = new Image();
 var scissors = new Image();
@@ -64,6 +67,9 @@ function draw(rock,paper,scissors, crock, cpaper, cscissors){
     ctx.drawImage(cscissors, canvas.width/2 -scissors.width/2+100, 375);
 
     ctx.fillText(result, canvas.width/2, 525);
+
+    ctx.fillText("Wins:"+ wins, 250, 100);
+    ctx.fillText("Loss:"+ Loss, 250, 100);
 }
 
 ctx.font = "40px Calibri";
@@ -111,12 +117,14 @@ function playGame(playerChoise) {
             else if (cpuChoise == 1) {
                 /*alignText('CPU chose Paper.', 500, 200, "red")
                 alignText('CPU wins!', 500, 400, "red")*/
-                result = "CPU chose Paper. CPU wins!"
+                loss++;
+                result = "CPU chose Paper. CPU Wins!"
                 draw(hrock, paper, scissors, rock, hpaper,scissors)
             }
             else{
                 /*alignText("CPU chose Scissors.", 500, 200, "red")
                 alignText(" You win!", 500, 400, "blue")*/
+                wins++;
                 result = "CPU chose Scissors. You win!"
                 draw(hrock, paper, scissors, rock, paper,hscissors)
             }
