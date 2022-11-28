@@ -12,12 +12,12 @@ var hrock = new Image();
 var hpaper = new Image();
 var hscissors = new Image();
 
-rock.src ="images/rock.jpg";
-paper.src ="images/paper.jpg";
-scissors.src ="images/scissors.jpg";
-hrock.src ="images/rock2.jpg";
-hpaper.src ="images/paper2.jpg";
-hscissors.src ="images/scissors2.jpg";
+rock.src ="images/Sloop.png";
+paper.src ="images/Brigantine.png";
+scissors.src ="images/Galleon.png";
+hrock.src ="images/Sloop2.png";
+hpaper.src ="images/Brigantine2.png";
+hscissors.src ="images/Galleon2.png";
 
 var result = "Select a button from above to choose.";
 
@@ -47,29 +47,39 @@ function draw(rock,paper,scissors, crock, cpaper, cscissors){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.font = "30px Arial";
         ctx.textAlign = "center";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 0.5;
         ctx.fillStyle = "black";
         ctx.fillText("Welcome Press Space to Play", canvas.width/2, 100);
+        ctx.strokeText("Welcome Press Space to Play", canvas.width/2, 100);
         return;
     }
     //clear canvas
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.font = "30px Arial";
     ctx.textAlign = "center";
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 0.5;
     ctx.fillStyle = "black";
     ctx.fillText("Player Choices", canvas.width/2, 100);
+    ctx.strokeText("Player Choices", canvas.width/2, 100);
     ctx.drawImage(rock, canvas.width/2 -rock.width/2-100, 150);
     ctx.drawImage(paper, canvas.width/2 -paper.width/2, 150);
     ctx.drawImage(scissors, canvas.width/2 -scissors.width/2+100, 150);
 
     ctx.fillText("Computer Choices", canvas.width/2, 325);
+    ctx.strokeText("Computer Choices", canvas.width/2, 325);
     ctx.drawImage(crock, canvas.width/2 -rock.width/2-100, 375);
     ctx.drawImage(cpaper, canvas.width/2 -paper.width/2, 375);
     ctx.drawImage(cscissors, canvas.width/2 -scissors.width/2+100, 375);
 
     ctx.fillText(result, canvas.width/2, 525);
+    ctx.strokeText(result, canvas.width/2, 525);
 
     ctx.fillText("Wins:"+ wins, 250, 100);
-    ctx.fillText("Loss:"+ Loss, 250, 100);
+    ctx.strokeText("Wins:"+ wins, 250, 100);
+    ctx.fillText("Loss:"+ loss, 750, 100);
+    ctx.strokeText("Loss:"+ loss, 750, 100);
 }
 
 ctx.font = "40px Calibri";
@@ -111,21 +121,21 @@ function playGame(playerChoise) {
                 //its a tie
                 /*alignText("CPU chose Rock.", 500, 200, "red")
                 alignText("It's a tie!", 500, 400, "black")*/
-                result = "CPU chose Rock. It's a tie!"
+                result = "CPU chose Sloop. It's a Tie!"
                 draw(hrock, paper, scissors, hrock, paper,scissors)
             }
             else if (cpuChoise == 1) {
                 /*alignText('CPU chose Paper.', 500, 200, "red")
                 alignText('CPU wins!', 500, 400, "red")*/
                 loss++;
-                result = "CPU chose Paper. CPU Wins!"
+                result = "CPU chose Brigantine. CPU Wins!"
                 draw(hrock, paper, scissors, rock, hpaper,scissors)
             }
             else{
                 /*alignText("CPU chose Scissors.", 500, 200, "red")
                 alignText(" You win!", 500, 400, "blue")*/
                 wins++;
-                result = "CPU chose Scissors. You win!"
+                result = "CPU chose Galleon. You Win!"
                 draw(hrock, paper, scissors, rock, paper,hscissors)
             }
             break;
@@ -134,19 +144,21 @@ function playGame(playerChoise) {
                 //its a tie
                 /*alignText("CPU chose Rock.", 500, 200, "red")
                 alignText("You win!", 500, 400, "blue")*/
-                result = "CPU chose Rock. You win!"
+                wins++;
+                result = "CPU chose Sloop. You Win!"
                 draw(rock, hpaper, scissors, hrock, paper,scissors)
             }
             else if (cpuChoise == 1) {
                 /*alignText("CPU chose Paper.", 500, 200, "red")
                 alignText("It's a tie!", 500, 400, "black")*/
-                result = "CPU chose Paper. It's a tie!"
+                result = "CPU chose Brigantine. It's a Tie!"
                 draw(rock, hpaper, scissors, rock, hpaper,scissors)
             }
             else {
                 /*alignText("CPU chose Scissors.", 500, 200, "red")
                 alignText("CPU wins!", 500, 400, "red")*/
-                result = "CPU chose Scissors. CPU wins!"
+                loss++;
+                result = "CPU chose Galleon. CPU Wins!"
                 draw(rock, hpaper, scissors, rock, paper,hscissors)
             }
             break;
@@ -155,19 +167,21 @@ function playGame(playerChoise) {
                 //its a tie
                 /*alignText("CPU chose Rock.", 500, 200, "red")
                 alignText("CPU wins!", 500, 400, "red")*/
-                result = "CPU chose Rock. CPU wins!"
+                loss++;
+                result = "CPU chose Sloop. CPU Wins!"
                 draw(rock, paper, hscissors, hrock, paper,scissors)
             }
             else if (cpuChoise == 1) {
                 /*alignText('CPU chose Paper.', 500, 200, "red")
                 alignText('You win!', 500, 400, "blue")*/
-                result = "CPU chose Paper. You win!"
+                wins++;
+                result = "CPU chose Brigantine. You Win!"
                 draw(rock, paper, hscissors, rock, hpaper,scissors)
             }
             else {
                 /*alignText("CPU chose Scissors.", 500, 200, "red")
                 alignText("It's a tie!", 500, 400, "black")*/
-                result = "CPU chose Scissors. It's a tie!"
+                result = "CPU chose Galleon. It's a Tie!"
                 draw(rock, paper, hscissors, rock, paper,hscissors)
             }
             break;

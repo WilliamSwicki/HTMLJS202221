@@ -1,0 +1,35 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+}
+canvas{
+    border:1px solid black;
+}
+h1{
+    font-size: 40px;
+}
+nav, h1{
+    text-align: center;
+}
+h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(231, 89, 46);
+}
+nav{
+    padding-bottom: 5px;
+    margin: 0px;
+}
+canvas{
+    background-color: rgb(35, 45, 129);
+    border: 2px solid rgb(252, 225, 204);
+}
+button{
+    background-color: brown;
+    color: white;
+}
+button:hover{
+    background-color:aqua;
+    color:brown;
+}
