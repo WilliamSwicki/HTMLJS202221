@@ -4,7 +4,7 @@ var ctx = canvas.getContext("2d");
 var timer = requestAnimationFrame(main);
 var start = 50;
 var finish = 750;
-var speed = 2;
+var speed = randomNumber(6,2);
 
 //car vars
 var carPos=2;
@@ -55,7 +55,9 @@ function main(){
         }
     //draw start line
     drawStartFinishLine();
-    drawCar();
+    drawCar(0,"red");
+    drawCar(150,"green");
+    drawCar(-150,"purple");
     
     
     drawFuelBar();
@@ -75,10 +77,11 @@ function drawStartFinishLine(main){
     //draw finish line
     ctx.fillRect(finish, 50, 10 ,500);
 }
-function drawCar(main){
+
+function drawCar(position,color){
     //draw car
-    ctx.fillStyle = "red";
-    ctx.fillRect(carPos,canvas.height/2,40,20);
+    ctx.fillStyle = color;
+    ctx.fillRect(carPos,canvas.height/2+position,40,20);
 }
 
 function drawFuelBar(){

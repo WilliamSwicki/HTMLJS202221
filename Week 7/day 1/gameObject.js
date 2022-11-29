@@ -14,7 +14,7 @@ var gravity = 0.05;
 //ctx.fillStyle = "green";
 //ctx.fillRect(500, 250, 100, 100);
 
-//utkity function
+//utlity function
 function randomRange(high, low){
     return Math.random()*(high-low)+low;
 }
@@ -99,8 +99,8 @@ function main(){
 
     for(var i = 0; i<circles.length; i++){
         circles[i].move();
-        circles[i].vy /= gravity;
-        circles[i].vx *= gravity;
+        circles[i].vy += gravity;
+        circles[i].vx += gravity;
         circles[i].drawCircle();
         //circles[i].drawImage();
     }
