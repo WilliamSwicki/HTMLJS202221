@@ -12,6 +12,8 @@ var sFuel= randomNumber(canvas.width-40, 600);
 var fuel = sFuel;
 var fuelBarWidth = 300;
 var gameOver=true;
+var carWidth = 50;
+var carHeight = 30;
 
 //timer vars
 var seconds = 3;
@@ -19,6 +21,13 @@ var fps = 60;
 var frames = fps;
 
 document.addEventListener("keydown",pressSpace);
+
+var carSprite = new Image
+carSprite.src = "image/Car.png"
+
+carSprite.onload = function(){
+    main();
+}
 
 function pressSpace(e){
     if(e.keyCode==32 && gameOver){
@@ -55,7 +64,7 @@ function main(){
         }
     //draw start line
     drawStartFinishLine();
-    drawCar(0,"red");
+    drawCar(0, "#ffffff00");
     drawCar(150,"green");
     drawCar(-150,"purple");
     
@@ -81,7 +90,8 @@ function drawStartFinishLine(main){
 function drawCar(position,color){
     //draw car
     ctx.fillStyle = color;
-    ctx.fillRect(carPos,canvas.height/2+position,40,20);
+    ctx.fillRect(carPos,canvas.height/2+position,carWidth,carHeight);
+    ctx.drawImage(carSprite,carPos,canvas.height/2,carWidth,carHeight);
 }
 
 function drawFuelBar(){
