@@ -1,0 +1,19 @@
+html,body{
+    display: flex;
+    justify-content: center;
+}
+canvas{
+    border: solid 1px darkblue;
+}
+html{
+    background-color: rgb(61, 42, 131);
+}
+canvas{
+    background-color:rgb(24, 24, 97);
+    background-image: url("image/Cbackground.jpg");
+    /*border: 50px solid darkblue;*/
+}
+@font-face {
+    font-family: Space;
+    src: url(fonts/ZenDots-Regular.ttf);
+}
