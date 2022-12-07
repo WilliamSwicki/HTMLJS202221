@@ -10,8 +10,8 @@ var score = 0;
 var highScore = 0;
 
 //ship var
-var yspeed = 10
-var xspeed = 5
+var yspeed = 5
+var xspeed = 10
 var ship = new PlayerShip();
 
 function PlayerShip() {
@@ -31,10 +31,10 @@ function PlayerShip() {
         ctx.translate(this.x, this.y);
         ctx.fillStyle = "red";
         ctx.beginPath();
-        ctx.moveTo(0, -10);
-        ctx.lineTo(10, 10);
+        ctx.moveTo(10, 0);
         ctx.lineTo(-10, 10);
-        ctx.lineTo(0, -10);
+        ctx.lineTo(-10, -10);
+        ctx.lineTo(10, 0);
         ctx.closePath();
         ctx.fill();
         ctx.restore();
@@ -109,10 +109,24 @@ function pressKeyDown(e) {
     }
     if(gameOver){
         if(e.keyCode == 32){
-            gameOver = false;
-            currentState = 1;
-            scoreTimer();
-            main();
+            if(currentState == 2){
+                //from the game over screen
+                currentState = 0;
+                numAsteroids = 20;
+                asteroids = [];
+                score = 0;
+                gameStart();
+                main();
+            }
+            else{
+                //from the main menu
+                gameStart();
+                gameOver = false;
+                currentState = 1;
+                scoreTimer();
+                main();
+            }
+        
         }
     }
 
@@ -180,14 +194,17 @@ function Asteroid() {
     }
 }
 
-//creating the asteroids
-for (var i = 0; i < numAsteroids; i++) {
-    asteroids[i] = new Asteroid();
-}
-
-
 
 //utility functions
+function gameStart(){
+    //creating the asteroids
+    for (var i = 0; i < numAsteroids; i++) {
+        asteroids[i] = new Asteroid();
+    }
+    //create new instance of player ship
+    ship = new PlayerShip();
+}
+
 function randomRange(high, low) {
     return Math.random() * (high - low) + low;
 }
@@ -199,12 +216,12 @@ function detectCollision(distance, calcDistance) {
 function scoreTimer(){
     if(!gameOver){
         score++;
-        if(score % 5 == 0){
+        if(score % 300 == 0){
             numAsteroids += 10;
             console.log(numAsteroids);
         }
-
-        setTimeout(scoreTimer,1000);
+        //timer in ms
+        setTimeout(scoreTimer,17);
     }
 }
 
@@ -237,7 +254,7 @@ gameState[1] = function(){
             ship.vy = yspeed;
         }
         else {
-            ship.vy = 3;
+            ship.vy = 0;
         }
         //setup horazontal movement
         if (ship.left) {
@@ -259,10 +276,14 @@ gameState[1] = function(){
             var dY = ship.y - asteroids[i].y;
             var distance = Math.sqrt((dX * dX) + (dY * dY));
     
+            //collision Dection is here
             if (detectCollision(distance, (ship.height / 2 + asteroids[i].radius))) {
                 //alert("Hit Asteroid Game Over");
                 gameOver = true;
                 currentState = 2;
+                main();
+                //clears astroids
+                return;
             }
     
             if (asteroids[i].y > canvas.height + asteroids[i].radius) {
@@ -283,12 +304,33 @@ gameState[1] = function(){
 }
 //game over
 gameState[2] = function(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(score> highScore){
+        //new high score
+        highScore = score;
+        ctx.save();
     ctx.font = "30px Arial";
-    ctx.fillStyle = "white;";
+    ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText("Your Score is:" + score.toString(), canvas.width/2, canvas.height/2 - 35);
-    ctx.fillText("Press Space to Replay", canvas.width/2, canvas.height/2)
+    ctx.fillText("Game Over Your Score was : " + score.toString(), canvas.width/2, canvas.height/2 - 60);
+    ctx.fillText("Your New High Score is : " + highScore.toString(), canvas.width/2, canvas.height/2 - 30);
+    ctx.fillText("New Record!", canvas.width/2, canvas.height/2);
+    ctx.font = "15px Arial";
+    ctx.fillText("Press Space to Replay", canvas.width/2, canvas.height/2 + 20);
+    ctx.restore();
+    }
+    else{
+        //regular high score
+        //console.log(currentState);
+    ctx.save();
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over Your Score was : " + score.toString(), canvas.width/2, canvas.height/2 - 60);
+    ctx.fillText("Your High Score is : " + highScore.toString(), canvas.width/2, canvas.height/2 - 30);
+    ctx.font = "15px Arial";
+    ctx.fillText("Press Space to Replay", canvas.width/2, canvas.height/2 + 20);
+    ctx.restore();
+    }
     
 }
 
