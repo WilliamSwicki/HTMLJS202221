@@ -1,0 +1,23 @@
+html,body{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    background-image: url("images/SBG.png");
+}
+#container{
+    background-color: grey;
+    border: 5px solid silver;
+}
+h1,p{
+    font-family: Space;
+    text-align: center;
+    color: white;
+}
+canvas{
+    border: 5px solid silver;
+    background-image: url("images/SBG.png");
+}
+@font-face {
+    font-family: Space;
+    src: url(fonts/ZenDots-Regular.ttf);
+}

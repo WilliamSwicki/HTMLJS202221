@@ -13,6 +13,8 @@ var highScore = 0;
 var yspeed = 5
 var xspeed = 10
 var ship = new PlayerShip();
+var shipSprite = new Image();
+shipSprite.src = "images/ship.png"
 
 function PlayerShip() {
     this.x = canvas.width / 2;
@@ -29,7 +31,8 @@ function PlayerShip() {
     this.drawShip = function () {
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.fillStyle = "red";
+        ctx.drawImage(shipSprite,this.width - 30,this.height - 30);
+        ctx.fillStyle = "#ffffff00";
         ctx.beginPath();
         ctx.moveTo(10, 0);
         ctx.lineTo(-10, 10);
@@ -47,22 +50,22 @@ function PlayerShip() {
         //add bounderies to canvas
         //bottem
         if (this.y > canvas.height - this.height / 2) {
-            this.y = canvas.height - this.height / 2;
+            this.y = this.height / 2;
             this.vy = 0;
         }
         //top
         if (this.y < this.height / 2) {
-            this.y = this.height / 2;
+            this.y = canvas.height - this.height / 2;
             this.vy = 0;
         }
         //right
         if (this.x > canvas.width - this.width / 2) {
-            this.x = this.width / 2;
+            this.x = canvas.width - this.width / 2;
             //this.vx = 0;
         }
         //left
         if (this.x < this.width / 2) {
-            this.x = canvas.width - this.width / 2;
+            this.x = this.width / 2;
             //this.vx = 0;
         }
     }
@@ -173,23 +176,27 @@ function pressKeyUp(e) {
 //var for asteroid making
 var numAsteroids = 20;
 var asteroids = [];
+var asteroidSprite = new Image();
+asteroidSprite.src = "images/asteroid.png";
 
 //class for asteroid
 function Asteroid() {
     this.radius = randomRange(15, 2);
-    this.x = randomRange(canvas.width - this.radius, this.radius);
-    this.y = randomRange(canvas.height - this.radius, this.radius) - canvas.height;
-    this.vy = randomRange(10, 5);
-    this.color = "white";
+    this.x = randomRange(canvas.width - this.radius, this.radius) + canvas.width;
+    this.y = randomRange(canvas.height - this.radius, this.radius);
+    this.vx = randomRange(10, 5);
+    this.color = "#ffffff";
 
+   
     this.drawAsteroid = function () {
         //comands to draw asteroids
         ctx.save();
-        ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-        ctx.closePath();
-        ctx.fill();
+        // ctx.beginPath();
+        // ctx.fillStyle = this.color;
+        // ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+        // ctx.closePath();
+        // ctx.fill();
+        ctx.drawImage(asteroidSprite, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
         ctx.restore();
     }
 }
@@ -227,13 +234,20 @@ function scoreTimer(){
 
 //asteroid game state machine
 //main menu
+var menu = new Image();
+menu.src ="images/MenuBG.png";
+menu.onload = function(){
+    main();
+}
+
 gameState[0] = function(){
     ctx.save();
-    ctx.font = "30px Arial";
+    ctx.drawImage(menu, 0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Space";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText("Asteroid Avoider", canvas.width/2, canvas.height/2 - 30);
-    ctx.font = "15px Arial";
+    ctx.font = "15px Space";
     ctx.fillText("Press Space to Start", canvas.width/2, canvas.height/2 + 20);
     ctx.restore();
 }
@@ -241,7 +255,7 @@ gameState[0] = function(){
 gameState[1] = function(){
         //draw score
         ctx.save();
-        ctx.font = "15px Arial";
+        ctx.font = "15px Space";
         ctx.fillStyle = "white";
         ctx.fillText("Score: " + score.toString(), canvas.width-150, 30);
         ctx.restore();
@@ -286,13 +300,13 @@ gameState[1] = function(){
                 return;
             }
     
-            if (asteroids[i].y > canvas.height + asteroids[i].radius) {
-                asteroids[i].x = randomRange(canvas.width - asteroids[i].radius, asteroids[i].radius);
-                asteroids[i].y = randomRange(canvas.height - asteroids[i].radius, asteroids[i].radius) - canvas.height;
-                asteroids[i].vy += 0.0;
+            if (asteroids[i].x < canvas.width - canvas.width + asteroids[i].radius) {
+                asteroids[i].y = randomRange(canvas.width - asteroids[i].radius, asteroids[i].radius);
+                asteroids[i].x = randomRange(canvas.height - asteroids[i].radius, asteroids[i].radius) + canvas.width;
+                asteroids[i].vx -= 0.0;
             }
             //draw the asteroids
-            asteroids[i].y += asteroids[i].vy;
+            asteroids[i].x -= asteroids[i].vx;
             asteroids[i].drawAsteroid();
 
             //check to see if we need to add more astroids
@@ -304,17 +318,18 @@ gameState[1] = function(){
 }
 //game over
 gameState[2] = function(){
+    ctx.drawImage(menu, 0, 0, canvas.width, canvas.height);
     if(score> highScore){
         //new high score
         highScore = score;
         ctx.save();
-    ctx.font = "30px Arial";
+    ctx.font = "30px Space";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText("Game Over Your Score was : " + score.toString(), canvas.width/2, canvas.height/2 - 60);
     ctx.fillText("Your New High Score is : " + highScore.toString(), canvas.width/2, canvas.height/2 - 30);
     ctx.fillText("New Record!", canvas.width/2, canvas.height/2);
-    ctx.font = "15px Arial";
+    ctx.font = "15px Space";
     ctx.fillText("Press Space to Replay", canvas.width/2, canvas.height/2 + 20);
     ctx.restore();
     }
@@ -322,12 +337,12 @@ gameState[2] = function(){
         //regular high score
         //console.log(currentState);
     ctx.save();
-    ctx.font = "30px Arial";
+    ctx.font = "30px Space";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText("Game Over Your Score was : " + score.toString(), canvas.width/2, canvas.height/2 - 60);
     ctx.fillText("Your High Score is : " + highScore.toString(), canvas.width/2, canvas.height/2 - 30);
-    ctx.font = "15px Arial";
+    ctx.font = "15px Space";
     ctx.fillText("Press Space to Replay", canvas.width/2, canvas.height/2 + 20);
     ctx.restore();
     }
