@@ -90,7 +90,7 @@ var playerData ={
 				{width:32, height:64, startX:576, startY:0}
 			]
 		}
-	}
+	}		
 		
 }
 var bulletData ={
