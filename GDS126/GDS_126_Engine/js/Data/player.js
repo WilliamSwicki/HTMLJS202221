@@ -91,5 +91,25 @@ var playerData ={
 			]
 		}
 	}
-		
+}
+
+var bulletData ={
+	info:{
+		src:`images/attack_Bullet.png`
+	},
+	states:{
+		//The idle animation 
+    	idle:
+		{
+			fps:5,
+			cycle:true,
+			frames:
+			[
+				{width:16, height:8, startX:0, startY:0},
+				{width:16, height:8, startX:17, startY:0},
+				{width:16, height:8, startX:33, startY:0},
+				{width:16, height:8, startX:17, startY:0}
+			]
+		}
+	}
 }
