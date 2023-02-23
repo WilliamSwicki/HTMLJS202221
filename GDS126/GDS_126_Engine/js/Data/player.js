@@ -105,10 +105,10 @@ var bulletData ={
 			cycle:true,
 			frames:
 			[
-				{width:16, height:8, startX:0, startY:0},
-				{width:16, height:8, startX:17, startY:0},
-				{width:16, height:8, startX:33, startY:0},
-				{width:16, height:8, startX:17, startY:0}
+				{width:32, height:16, startX:0, startY:0},
+				{width:32, height:16, startX:33, startY:0},
+				{width:32, height:16, startX:65, startY:0},
+				{width:32, height:16, startX:33, startY:0}
 			]
 		}
 	}

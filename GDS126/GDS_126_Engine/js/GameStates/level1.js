@@ -6,12 +6,12 @@ var friction = {x:.85,y:.97}
 var stage = new GameObject({width:canvas.width, height:canvas.height});
 
 //Avatar
-var wiz = new GameObject({width:128, height:128, spriteData:playerData}).makeSprite(playerData)
+var wiz = new GameObject({width:64, height:128, spriteData:playerData}).makeSprite(playerData)
 wiz.force=1
 
 //The ground
 var ground = new GameObject({width:canvas.width*10, x:canvas.width*10/2,height:64,y:canvas.height-32, color:"green"})
-ground.img.src=`images/ground.png`
+ground.img.src=`images/DirtTop.png`
 
 //A platform
 var plat = new GameObject({width:256, height:64,y:canvas.height-200, color:"green"})
@@ -78,10 +78,10 @@ bg.img.src=`images/bgfull.png`
 var bullets=[]
 var canShoot=true;
 var shotTimer = 0;
-var shotDelay = 15;
+var shotDelay = 10;
 var currentBullet = 0;
 
-for(let i=0; i<100; i++)
+for(let i=0; i<1000; i++)
 {
 	bullets[i] = new GameObject({width:32, height:16})
 	//bullets[i].img.src="images/mrt.jpg"
@@ -158,9 +158,9 @@ gameStates[`level1`] = function()
 			shotTimer = shotDelay
 			//console.log(`Boom`)
 
-			bullets[currentBullet].vx = 5*wiz.dir;
+			bullets[currentBullet].vx = 8*wiz.dir;
 			bullets[currentBullet].world = level;
-			bullets[currentBullet].x = wiz.x-level.x + (wiz.dir * 96) ;
+			bullets[currentBullet].x = wiz.x-level.x + (wiz.dir * 35) ;
 			bullets[currentBullet].y = wiz.y + rand(-10, 40);
 			bullets[currentBullet].dir = wiz.dir;
 			
