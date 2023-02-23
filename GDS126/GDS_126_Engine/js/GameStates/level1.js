@@ -78,12 +78,12 @@ bg.img.src=`images/bgfull.png`
 var bullets=[]
 var canShoot=true;
 var shotTimer = 0;
-var shotDelay = 21;
+var shotDelay = 15;
 var currentBullet = 0;
 
 for(let i=0; i<100; i++)
 {
-	bullets[i] = new GameObject({width:64, height:32})
+	bullets[i] = new GameObject({width:32, height:16})
 	//bullets[i].img.src="images/mrt.jpg"
 	bullets[i].makeSprite(bulletData)
 	bullets[i].y=-10000
