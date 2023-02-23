@@ -101,7 +101,7 @@ var bulletData ={
 		//The idle animation 
     	idle:
 		{
-			fps:5,
+			fps:15,
 			cycle:true,
 			frames:
 			[
