@@ -71,7 +71,7 @@ rbg.img.src=`images/Middlegroundhigherres.png`
 
 //middleground
 var bg = new GameObject({x:level.x,y:level.y, width:canvas.width*4, height:canvas.height})
-bg.img.src=`images/fullbackg.png`
+bg.img.src=`images/fullbackgfull.png`
 
 /*------------------vvBULLET STUFFvv----------------------*/
 
