@@ -113,3 +113,28 @@ var bulletData ={
 		}
 	}
 }
+var buttonData ={
+	info:{
+		src:'images/menubutton_spritesheet.png'
+	},
+	states:{
+		idle:
+		{
+			fps:1,
+			cycle: true,
+			frames:
+			[
+				{width:243, height:94, startX:0, startY:0},
+			]
+		},
+		hover:
+		{
+			fps:1,
+			cycle: true,
+			frames:
+			[
+				{width:243, height:94, startX:243, startY:0}
+			]
+		}
+	}
+}
