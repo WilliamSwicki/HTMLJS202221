@@ -7,7 +7,7 @@ var stage = new GameObject({width:canvas.width, height:canvas.height});
 
 //Avatar
 var wiz = new GameObject({width:64, height:128, spriteData:playerData}).makeSprite(playerData)
-wiz.force=1
+wiz.force=1.25
 
 //The ground
 var ground = new GameObject({width:canvas.width*10, x:canvas.width*10/2,height:64,y:canvas.height-32, color:"green"})
@@ -75,8 +75,8 @@ var bg = new GameObject({x:level.x,y:level.y, width:canvas.width*4, height:canva
 bg.img.src=`images/fullbackgfull.png`
 
 //Music and looping sounds
-sounds.play('music',0);
-sounds.play('bgSounds',0);
+//sounds.play('music',0);
+//sounds.play('bgSounds',0);
 
 /*------------------vvBULLET STUFFvv----------------------*/
 
@@ -86,7 +86,7 @@ var shotTimer = 0;
 var shotDelay = 10;
 var currentBullet = 0;
 
-for(let i=0; i<1000; i++)
+for(let i=0; i<100; i++)
 {
 	bullets[i] = new GameObject({width:32, height:16})
 	//bullets[i].img.src="images/mrt.jpg"
@@ -164,7 +164,7 @@ gameStates[`level1`] = function()
 			//console.log(`Boom`)
 			//for loop alows you to shoot a spread of random bullets
 			for(i=0; i<5; i++){
-			bullets[currentBullet].vx = 9*wiz.dir;
+			bullets[currentBullet].vx = 13*wiz.dir;
 			bullets[currentBullet].world = level;
 			bullets[currentBullet].x = wiz.x-level.x + (wiz.dir * 35) ;
 			bullets[currentBullet].y = wiz.y + rand(-10, 40);
