@@ -74,6 +74,10 @@ rbg.img.src=`images/Middlegroundhigherres.png`
 var bg = new GameObject({x:level.x,y:level.y, width:canvas.width*4, height:canvas.height})
 bg.img.src=`images/fullbackgfull.png`
 
+//Music and looping sounds
+sounds.play('music',0);
+sounds.play('bgSounds',0);
+
 /*------------------vvBULLET STUFFvv----------------------*/
 
 var bullets=[]
@@ -139,7 +143,7 @@ gameStates[`level1`] = function()
 		wiz.canJump = false;
 		wiz.vy = wiz.jumpHeight;
 		wiz.changeState(`jump`)
-		//sounds.play(`splode`,1)
+		sounds.play(`jump`,0)
 	}
 	shotTimer--;
 	if(shotTimer <=0)
@@ -166,7 +170,7 @@ gameStates[`level1`] = function()
 			bullets[currentBullet].y = wiz.y + rand(-10, 40);
 			bullets[currentBullet].dir = wiz.dir;
 			
-			//sounds.play(`splode`,1)
+			sounds.play(`shoot`,0)
 
 			currentBullet++;
 			}
