@@ -13,6 +13,7 @@ var ball;
 	
 	//Instantiate the Player
 	ball = new Ball();
+	ball.vx = 5;
 	
 	//Set the Animation Timer
 	timer = setInterval(animate, interval);
@@ -23,8 +24,18 @@ function animate()
 	context.clearRect(0,0,canvas.width, canvas.height);	
 	
 	//Move the Player
-	ball.x += 2;
+	ball.x += ball.vx;
+
+	if(ball.x+ball.width/2>canvas.width)
+	{
+		ball.vx = -ball.vx;
+	}
 	
+	if(ball.x<ball.width/2)
+	{
+		ball.vx = -ball.vx;
+	}
+
 	//Update the Screen
 	ball.draw();
 }
