@@ -14,6 +14,7 @@ var ball;
 	//Instantiate the Player
 	ball = new Ball();
 	ball.vx = 5;
+	ball.vy = 5;
 	
 	//Set the Animation Timer
 	timer = setInterval(animate, interval);
@@ -34,6 +35,18 @@ function animate()
 	if(ball.x<ball.width/2)
 	{
 		ball.vx = -ball.vx;
+	}
+
+	ball.y += ball.vy;
+
+	if(ball.y+ball.height/2>canvas.height)
+	{
+		ball.vy = -ball.vy;
+	}
+	
+	if(ball.y<ball.height/2)
+	{
+		ball.vy = -ball.vy;
 	}
 
 	//Update the Screen
