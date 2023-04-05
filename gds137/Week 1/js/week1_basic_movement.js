@@ -33,7 +33,8 @@ function animate()
 		ball.vx = -ball.vx*accelration;
 		ball.color="#00ff00";
 		if (ball.vx >10 ||ball.vx<-10)
-		{
+		{	
+			ball.x = canvas.width-ball.width/2;
 			ball.vx=-5;
 		}
 	}
@@ -52,6 +53,7 @@ function animate()
 		ball.color="#0000ff";
 		if (ball.vy >10 ||ball.vy<-10)
 		{
+			ball.y = canvas.height-ball.height/2;
 			ball.vy=-5;
 		}
 	}
