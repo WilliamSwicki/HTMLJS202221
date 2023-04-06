@@ -14,9 +14,8 @@ player1.vy = 0;
  player1.x = 50;
 
 ball = new GameObject();
-	ball.vx = -5;
-	ball.vy = 0;
-    ball.color  =`blue`
+	ball.vx = 5;
+	ball.vy = 5;
 
 var timer = setInterval(animate, interval);
 
@@ -55,36 +54,39 @@ function animate()
     ball.x += ball.vx;
     ball.y += ball.vy;
 
-	/*if(ball.x>canvas.width-ball.width/2)
+	if(ball.x>canvas.width-ball.width/2)
 	{
         ball.x = canvas.width-ball.width/2;
-		ball.vx = -ball.vx
-	}*/
+		ball.vx = -ball.vx*accelration;
+        ball.color="#00ff00";
+        if (ball.vx >10 ||ball.vx<-10)
+		{
+			ball.vx=-5;
+		}
+	}
 	
-	/*if(ball.x<ball.width/2)
+	if(ball.x<ball.width/2)
 	{
 		ball.vx = -ball.vx*accelration;
 		ball.color="#ff0000";
-	}*/
+	}
 
-	
-
-	/*if(ball.y+ball.height/2>canvas.height)
+	if(ball.y+ball.height/2>canvas.height)
 	{
+        ball.y = canvas.height-ball.height/2;
 		ball.vy = -ball.vy*accelration;
 		ball.color="#0000ff";
 		if (ball.vy >10 ||ball.vy<-10)
 		{
-			ball.y = canvas.height-ball.height/2;
 			ball.vy=-5;
 		}
-	}*/
+	}
 	
-	/*if(ball.y<ball.height/2)
+	if(ball.y<ball.height/2)
 	{
 		ball.vy = -ball.vy*accelration;
 		ball.color="#ffff00";
-	}*/
+	}
  
 	//Update the Screen
 	player1.drawRect();
