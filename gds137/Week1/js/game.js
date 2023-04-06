@@ -1,52 +1,32 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 
-var w = false;
-var s = false;
-
 var interval = 1000/60;
 
 var player1;
+var ball;
+var accelration = 1.05;
 
 player1 = new GameObject();
-player1.width = 33;
-player1.height = 100;
+player1.width = 20;
+player1.height = 150;
 player1.vy = 0;
+ player1.x = 50;
+
+ball = new GameObject();
+	ball.vx = -5;
+	ball.vy = 0;
+    ball.color  =`blue`
 
 var timer = setInterval(animate, interval);
-
-document.addEventListener("keydown", press);
-document.addEventListener("keyup", release);
-
-function press(e)
-{
-    if(e.keyCode == 87)
-    {
-        w = true;
-    }
-    if(e.keyCode == 83)
-    {
-        s = true;
-    }
-}
-function release(e)
-{
-    if(e.keyCode == 87)
-    {
-        w = false;
-    }
-    if(e.keyCode == 83)
-    {
-        s = false;
-    }
-}
 
 function animate()
 {
     context.clearRect(0,0,canvas.width,canvas.height);
     
+    //pattle movement
     //draw on the left
-    player1.x = 50;
+   
     
     if(w)
     {
@@ -59,18 +39,55 @@ function animate()
         player1.vy = 10;
         player1.y += player1.vy;
     }
-    
 
     if(player1.y < 0+player1.height/2)
     {
         player1.y = 0+player1.height/2;
         player1.vy = 0;
     }
-    if(player1.y+player1.height/2>canvas.height)
+    if(player1.y>canvas.height-player1.height/2)
     {
         player1.y=canvas.height - player1.height/2;
         player1.vy = 0;
     }
 
-    player1.drawRect();
+    //Ball movement
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+
+	/*if(ball.x>canvas.width-ball.width/2)
+	{
+        ball.x = canvas.width-ball.width/2;
+		ball.vx = -ball.vx
+	}*/
+	
+	/*if(ball.x<ball.width/2)
+	{
+		ball.vx = -ball.vx*accelration;
+		ball.color="#ff0000";
+	}*/
+
+	
+
+	/*if(ball.y+ball.height/2>canvas.height)
+	{
+		ball.vy = -ball.vy*accelration;
+		ball.color="#0000ff";
+		if (ball.vy >10 ||ball.vy<-10)
+		{
+			ball.y = canvas.height-ball.height/2;
+			ball.vy=-5;
+		}
+	}*/
+	
+	/*if(ball.y<ball.height/2)
+	{
+		ball.vy = -ball.vy*accelration;
+		ball.color="#ffff00";
+	}*/
+ 
+	//Update the Screen
+	player1.drawRect();
+   ball.drawCircle();
+
 }
