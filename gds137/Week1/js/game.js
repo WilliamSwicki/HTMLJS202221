@@ -16,6 +16,8 @@ player1.vy = 0;
 ball = new GameObject();
 	ball.vx = 5;
 	ball.vy = 5;
+    ball.width = 50;
+    ball.height = 50;
 
 var timer = setInterval(animate, interval);
 
@@ -65,11 +67,11 @@ function animate()
 		}
 	}
 	
-	if(ball.x<ball.width/2)
+	/*if(ball.x<ball.width/2)
 	{
 		ball.vx = -ball.vx*accelration;
 		ball.color="#ff0000";
-	}
+	}*/
 
 	if(ball.y+ball.height/2>canvas.height)
 	{
@@ -88,6 +90,10 @@ function animate()
 		ball.color="#ffff00";
 	}
  
+    if(ball.hitTestObject(player1))
+    {
+        ball.vx=-ball.vx;
+    }
 	//Update the Screen
 	player1.drawRect();
    ball.drawCircle();
