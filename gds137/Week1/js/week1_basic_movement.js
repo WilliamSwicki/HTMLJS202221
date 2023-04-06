@@ -13,7 +13,7 @@ var ball;
 	context = canvas.getContext("2d");	
 	
 	//Instantiate the Player
-	ball = new Ball();
+	ball = new GameObject();
 	ball.vx = 5;
 	ball.vy = 5;
 	
@@ -65,5 +65,5 @@ function animate()
 	}
 
 	//Update the Screen
-	ball.draw();
+	ball.drawCircle();
 }

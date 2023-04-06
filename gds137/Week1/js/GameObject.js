@@ -1,5 +1,5 @@
 // JavaScript Document
-function Ball()
+function GameObject()
 {
 	//player's location
 	this.x = canvas.width/2;
@@ -17,7 +17,7 @@ function Ball()
 	this.color = "#ff0000";
 	
 	//This draws the player to the screen
-	this.draw = function()
+	this.drawCircle = function()
 	{
 		context.save();
 			context.fillStyle = this.color;
@@ -31,6 +31,16 @@ function Ball()
 		
 	}	
 	
+	this.drawRect = function()
+	{
+		context.save();
+			context.fillStyle = this.color;
+			context.translate(this.x,this.y);
+			context.fillRect(-this.width/2,-this.height/2,this.width,this.height);
+			context.fill();
+		context.restore();
+	}
+
 	//This changes the player's position
 	this.move = function()
 	{
