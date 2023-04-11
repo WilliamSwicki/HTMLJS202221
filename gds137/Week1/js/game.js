@@ -14,8 +14,8 @@ player1.vy = 0;
  player1.x = 50;
 
 ball = new GameObject();
-	ball.vx = 5;
-	ball.vy = 5;
+	ball.vx = -5;
+	ball.vy = 0;
     ball.width = 50;
     ball.height = 50;
 
@@ -66,7 +66,7 @@ function animate()
 	if(ball.x<ball.width/2)
 	{
 		ball.vx = 5;
-        ball.vy = 5;
+        ball.vy = 0;
         ball.x=canvas.width/2;
         ball.y=canvas.height/2;
 		ball.color="#ff0000";
@@ -87,7 +87,21 @@ function animate()
  
     if(ball.hitTestObject(player1))
     {
-        ball.vx=-ball.vx;
+        if(ball.y < player1.y - player1.height/6)
+        {
+            ball.vx=-ball.vx;
+            ball.vy=-5;
+        }
+        if(ball.y > player1.y + player1.height/6)
+        {
+            ball.vx=-ball.vx;
+            ball.vy=5;
+        }
+        if(ball.y>player1.y-player1.height/6 && ball.y<player1.y+player1.height/6)
+        {
+            ball.vx=-ball.vx;
+            ball.vy = 0;
+        }
     }
 	//Update the Screen
 	player1.drawRect();
