@@ -88,19 +88,18 @@ function animate()
     if(ball.hitTestObject(player1))
     {
         if(ball.y < player1.y - player1.height/6)
-        {
+        {           
             ball.vx=-ball.vx;
-            ball.vy=-ball.vy;
+            ball.vy=ball.vy;
         }
         if(ball.y > player1.y + player1.height/6)
-        {
+        {    
             ball.vx=-ball.vx;
-            ball.vy= ball.vy;
+            ball.vy= -ball.vy;
         }
         if(ball.y>player1.y-player1.height/6 && ball.y<player1.y+player1.height/6)
         {
             ball.vx=-ball.vx;
-            ball.vy = 0;
         }
     }
 	//Update the Screen
