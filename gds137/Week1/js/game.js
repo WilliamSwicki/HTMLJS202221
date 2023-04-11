@@ -90,12 +90,12 @@ function animate()
         if(ball.y < player1.y - player1.height/6)
         {           
             ball.vx=-ball.vx;
-            ball.vy=-ball.vy;
+            ball.vy=-Math.abs(ball.vy);
         }
         if(ball.y > player1.y + player1.height/6)
         {    
             ball.vx=-ball.vx;
-            ball.vy= -ball.vy;
+            ball.vy= Math.abs(ball.vy);
         }
         if(ball.y>player1.y-player1.height/6 && ball.y<player1.y+player1.height/6)
         {
