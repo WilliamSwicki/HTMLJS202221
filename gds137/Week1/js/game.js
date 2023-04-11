@@ -61,27 +61,22 @@ function animate()
         ball.x = canvas.width-ball.width/2;
 		ball.vx = -ball.vx*accelration;
         ball.color="#00ff00";
-        if (ball.vx >10 ||ball.vx<-10)
-		{
-			ball.vx=-5;
-		}
 	}
 	
-	/*if(ball.x<ball.width/2)
+	if(ball.x<ball.width/2)
 	{
-		ball.vx = -ball.vx*accelration;
+		ball.vx = 5;
+        ball.vy = 5;
+        ball.x=canvas.width/2;
+        ball.y=canvas.height/2;
 		ball.color="#ff0000";
-	}*/
+	}
 
 	if(ball.y+ball.height/2>canvas.height)
 	{
         ball.y = canvas.height-ball.height/2;
 		ball.vy = -ball.vy*accelration;
 		ball.color="#0000ff";
-		if (ball.vy >10 ||ball.vy<-10)
-		{
-			ball.vy=-5;
-		}
 	}
 	
 	if(ball.y<ball.height/2)
