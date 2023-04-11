@@ -15,7 +15,7 @@ player1.vy = 0;
 
 ball = new GameObject();
 	ball.vx = -5;
-	ball.vy = 0;
+	ball.vy = 5;
     ball.width = 50;
     ball.height = 50;
 
@@ -90,12 +90,12 @@ function animate()
         if(ball.y < player1.y - player1.height/6)
         {
             ball.vx=-ball.vx;
-            ball.vy=-5;
+            ball.vy=-ball.vy;
         }
         if(ball.y > player1.y + player1.height/6)
         {
             ball.vx=-ball.vx;
-            ball.vy=5;
+            ball.vy= ball.vy;
         }
         if(ball.y>player1.y-player1.height/6 && ball.y<player1.y+player1.height/6)
         {
