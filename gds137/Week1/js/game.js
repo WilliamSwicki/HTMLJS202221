@@ -121,39 +121,32 @@ function animate()
     //player1 ball colishion
     if(ball.hitTestObject(player1))
     {
+        ball.vx=-ball.vx;
+        ball.x=player1.x+ball.width/2+player1.width/2;
         if(ball.y < player1.y - player1.height/6)
         {           
-            ball.vx=-ball.vx;
             ball.vy=-Math.abs(ball.vy);
         }
         if(ball.y > player1.y + player1.height/6)
         {    
-            ball.vx=-ball.vx;
             ball.vy= Math.abs(ball.vy);
-        }
-        if(ball.y>player1.y-player1.height/6 && ball.y<player1.y+player1.height/6)
-        {
-            ball.vx=-ball.vx;
         }
     }
 
     //player2 ball colishion
     if(ball.hitTestObject(player2))
-    {
+    { 
+        ball.vx=-ball.vx;
+        ball.x=player2.x-ball.width/2-player2.width/2;
         if(ball.y < player2.y - player2.height/6)
         {           
-            ball.vx=-ball.vx;
             ball.vy=-Math.abs(ball.vy);
         }
         if(ball.y > player2.y + player2.height/6)
         {    
-            ball.vx=-ball.vx;
             ball.vy= Math.abs(ball.vy);
         }
-        if(ball.y>player2.y-player2.height/6 && ball.y<player2.y+player2.height/6)
-        {
-            ball.vx=-ball.vx;
-        }
+           
     }
 
 	//Update the Screen
