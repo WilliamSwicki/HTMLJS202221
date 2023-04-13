@@ -13,6 +13,13 @@ player1.height = 150;
 player1.vy = 0;
  player1.x = 50;
 
+ player2 = new GameObject();
+ player2.width = 20;
+player2.height = 150;
+player2.vy = 0;
+ player2.x = canvas.width-50;
+ player2.color="#0000ff";
+
 ball = new GameObject();
 	ball.vx = -5;
 	ball.vy = 5;
@@ -52,21 +59,47 @@ function animate()
         player1.vy = 0;
     }
 
+    //Player2 movement
+    if(upArrow)
+    {
+      player2.vy = -10;
+      player2.y += player2.vy;
+    }
+    
+    if(downArrow)
+    {
+        player2.vy = 10;
+        player2.y += player2.vy;
+    }
+
+    if(player2.y < 0+player2.height/2)
+    {
+        player2.y = 0+player2.height/2;
+        player2.vy = 0;
+    }
+    if(player2.y>canvas.height-player2.height/2)
+    {
+        player2.y=canvas.height - player2.height/2;
+        player2.vy = 0;
+    }
+
     //Ball movement
     ball.x += ball.vx;
     ball.y += ball.vy;
 
 	if(ball.x>canvas.width-ball.width/2)
 	{
-        ball.x = canvas.width-ball.width/2;
-		ball.vx = -ball.vx*accelration;
+        ball.vx = ball.vx;
+		ball.vy = -ball.vy;
+        ball.x=canvas.width/2;
+        ball.y=canvas.height/2;
         ball.color="#00ff00";
 	}
 	
 	if(ball.x<ball.width/2)
 	{
-		ball.vx = 5;
-        ball.vy = 5;
+		ball.vx = ball.vx;
+        ball.vy = -ball.vy;
         ball.x=canvas.width/2;
         ball.y=canvas.height/2;
 		ball.color="#ff0000";
@@ -75,16 +108,17 @@ function animate()
 	if(ball.y+ball.height/2>canvas.height)
 	{
         ball.y = canvas.height-ball.height/2;
-		ball.vy = -ball.vy*accelration;
+		ball.vy = -ball.vy;
 		ball.color="#0000ff";
 	}
 	
 	if(ball.y<ball.height/2)
 	{
-		ball.vy = -ball.vy*accelration;
+		ball.vy = -ball.vy;
 		ball.color="#ffff00";
 	}
- 
+    
+    //player1 ball colishion
     if(ball.hitTestObject(player1))
     {
         if(ball.y < player1.y - player1.height/6)
@@ -102,8 +136,29 @@ function animate()
             ball.vx=-ball.vx;
         }
     }
+
+    //player2 ball colishion
+    if(ball.hitTestObject(player2))
+    {
+        if(ball.y < player2.y - player2.height/6)
+        {           
+            ball.vx=-ball.vx;
+            ball.vy=-Math.abs(ball.vy);
+        }
+        if(ball.y > player2.y + player2.height/6)
+        {    
+            ball.vx=-ball.vx;
+            ball.vy= Math.abs(ball.vy);
+        }
+        if(ball.y>player2.y-player2.height/6 && ball.y<player2.y+player2.height/6)
+        {
+            ball.vx=-ball.vx;
+        }
+    }
+
 	//Update the Screen
 	player1.drawRect();
+    player2.drawRect();
    ball.drawCircle();
 
 }
