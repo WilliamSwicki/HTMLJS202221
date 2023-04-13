@@ -158,6 +158,17 @@ function animate()
     player2.drawRect();
    ball.drawCircle();
 
+   //draw a line
+   context.save();
+   context.strokeStyle = "#d960f7";
+   context.beginPath();
+   context.moveTo(canvas.width/2,0);
+   context.lineTo(canvas.width/2,canvas.height);
+   context.closePath();
+   context.lineWidth = 5;
+   context.stroke();
+   context.restore();
+
    //text and score
    context.textAlign = "center";
    context.font = "20px Times New Roman";
