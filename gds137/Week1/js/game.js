@@ -1,4 +1,5 @@
 var canvas = document.getElementById("canvas");
+var img = document.getElementById("ric");
 var context = canvas.getContext("2d");
 
 var interval = 1000/60;
@@ -156,7 +157,11 @@ function animate()
 	//Update the Screen
 	player1.drawRect();
     player2.drawRect();
-   ball.drawCircle();
+    //ball.drawCircle();
+    context.save();
+    img.onload;
+    context.drawImage(img,ball.x-ball.width/2,ball.y-ball.width/2,ball.width,ball.height);
+    context.restore();
 
    //draw a line
    context.save();
