@@ -4,8 +4,12 @@ var context = canvas.getContext("2d");
 var interval = 1000/60;
 
 var player1;
+var player2;
 var ball;
 var accelration = 1.05;
+
+var player1Wins = 0;
+var player2Wins = 0;
 
 player1 = new GameObject();
 player1.width = 20;
@@ -32,10 +36,8 @@ function animate()
 {
     context.clearRect(0,0,canvas.width,canvas.height);
     
-    //pattle movement
-    //draw on the left
-   
-    
+
+    //pattle1 movement
     if(w)
     {
       player1.vy = -10;
@@ -48,9 +50,9 @@ function animate()
         player1.y += player1.vy;
     }
 
-    if(player1.y < 0+player1.height/2)
+    if(player1.y < player1.height/2)
     {
-        player1.y = 0+player1.height/2;
+        player1.y = player1.height/2;
         player1.vy = 0;
     }
     if(player1.y>canvas.height-player1.height/2)
@@ -93,6 +95,7 @@ function animate()
 		ball.vy = -ball.vy;
         ball.x=canvas.width/2;
         ball.y=canvas.height/2;
+        player1Wins++;
         ball.color="#00ff00";
 	}
 	
@@ -102,6 +105,7 @@ function animate()
         ball.vy = -ball.vy;
         ball.x=canvas.width/2;
         ball.y=canvas.height/2;
+        player2Wins++;
 		ball.color="#ff0000";
 	}
 
@@ -153,5 +157,11 @@ function animate()
 	player1.drawRect();
     player2.drawRect();
    ball.drawCircle();
+
+   //text and score
+   context.textAlign = "center";
+   context.font = "20px Times New Roman";
+   context.fillText("Player 1 | Player 2",canvas.width/2,30);
+   context.fillText(player1Wins + " - " + player2Wins,canvas.width/2,50);
 
 }
