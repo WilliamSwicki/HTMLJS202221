@@ -12,7 +12,14 @@ function GameObject()
 	//player's velocity or speed on each axis
 	this.vx = 0;
 	this.vy = 0;
+	this.force = 1;
 	
+	this.ax = 1;
+	this.ay = 1;
+	
+	//Text 
+	this.align = "left";
+
 	//movement
 	this.move = function()
 	{
@@ -72,6 +79,26 @@ function GameObject()
 			context.translate(this.x,this.y);
 			context.fillRect(-this.width/2,-this.height/2,this.width,this.height);
 		context.restore();
+	}
+
+	this.drawTxt = function(text, font)
+	{
+		context.save();
+		context.textAlign = this.align;
+   		context.font = font;
+  		context.fillText(text,this.x,this.y);
+	}
+
+	this.drawLine = function(x1,y1,x2,y2)
+	{
+		context.save();
+		context.beginPath();
+  		context.moveTo(x1,y1);
+   		context.lineTo(x2,y2);
+   		context.closePath();
+   		context.lineWidth = this.width;
+   		context.stroke();
+   		context.restore();
 	}
 
 	//This changes the player's position
