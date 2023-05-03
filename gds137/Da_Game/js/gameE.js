@@ -4,6 +4,9 @@ var context;
 var timer;
 var interval;
 var player;
+var maxShot;
+var shot = [];
+var currentShot =0;
 
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
@@ -13,6 +16,18 @@ var player;
 	player.angle;
 	player.rotationSpeed = 3;
 	player.force=0;
+
+	shot.width = 10;
+	shot.height = 10;
+	shot.color = "#5a5a5a";
+	shot.angle;
+
+	for(var i =0; i <=maxShot;i++)
+	{
+		shot[i]= new GameObject;
+		shot.x=player.x;
+		shot.y=-100;
+	}
 
 	var fX = .85;
 	var fY = .85;
@@ -55,7 +70,12 @@ function animate()
 	{
 		player.angle+=player.rotationSpeed;
 	}
-
+	if(space)
+	{
+		shot[currentShot].x=player.x;
+		shot[currentShot].y=player.y;
+		
+	}
 	player.vx *= fX;
 	player.vy *= fY;
 
@@ -72,6 +92,7 @@ function animate()
 		player.y=player.y+player.height/2;
 		player.force = 0;
 	}
+	
 
     player.drawShip();
 	//player.drawRect();

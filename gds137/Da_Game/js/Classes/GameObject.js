@@ -74,7 +74,6 @@ function GameObject(obj)
 			context.fillStyle = this.color;
 			context.closePath();
 	context.restore();
-
 	}
 	
 	this.move = function()
@@ -147,4 +146,5 @@ function GameObject(obj)
 		context.fillRect(this.x-size/2, this.y-size/2, size, size);
 		context.restore();
 	}
+
 }
