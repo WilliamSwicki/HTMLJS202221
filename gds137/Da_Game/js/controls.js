@@ -2,6 +2,7 @@ var w = false;
 var a = false;
 var s = false;
 var d = false;
+var space = false;
 
 
 document.addEventListener("keydown", press);

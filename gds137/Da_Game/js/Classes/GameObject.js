@@ -14,6 +14,7 @@ function GameObject(obj)
 		this.vy = 0;
 		this.angle =0;
 		this.rotationSpeed = 2;
+		this.accelerationSpeed =1;
 
 	//whether or not the object can jump
 	this.canJump = false;
