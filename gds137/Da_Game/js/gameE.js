@@ -65,6 +65,7 @@ function animate()
 		if(player.force>0)
 		{
 		player.force-=player.accelerationSpeed;
+
 		}
 	}
 	if(a)
@@ -137,10 +138,6 @@ function animate()
 
 	player.x += Math.round(player.vx);
 	player.y += Math.round(player.vy);
-
-	//console.log(player.vx);
-	//console.log(player.vy);
-	//console.log(player.x);
 
 	//wall colishion
 	if(player.y-player.height/2<0)

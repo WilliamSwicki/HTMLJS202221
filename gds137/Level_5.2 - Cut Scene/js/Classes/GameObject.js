@@ -6,43 +6,35 @@ function GameObject(obj)
 		this.width = 100;
 		this.height = 100;
 		this.color = "#ff0000";
-		this.teamColor = "#0000ff";
 		this.force = 1;
 		this.ax = 1;
 		this.ay = 1;
 		this.vx = 0;
 		this.vy = 0;
-		this.angle =0;
-		this.rotationSpeed = 2;
-		this.accelerationSpeed =1;
-		this.dx;
-		this.dy;
-
-	//whether or not the object can jump
-	this.canJump = false;
-	this.jumpHeight = -25;
-	//var for bullets
-	this.damage = 0;
-	
-	//------Allows us to pass object literals into the class to define its properties--------//
+		
+		
+		//------Allows us to pass object literals into the class to define its properties--------//
 		//------This eliminate the need to pass in the property arguments in a specific order------------//
 		if(obj!== undefined)
 		{
 			for(value in obj)
 			{
 				if(this[value]!== undefined)
-				{
-					this[value] = obj[value];
-				}
+				this[value] = obj[value];
 			}
 		}
-		
+	
+	
+	//whether or not the object can jump
+	this.canJump = false;
+	this.jumpHeight = -25;
+	
+
 	this.drawRect = function()
 	{
 		context.save();
 			context.fillStyle = this.color;
 			context.translate(this.x, this.y);
-			context.rotate(this.angle*Math.PI/180);
 			context.fillRect((-this.width/2), (-this.height/2), this.width, this.height);
 		context.restore();
 		
@@ -60,24 +52,6 @@ function GameObject(obj)
 		context.restore();
 		
 	}	
-
-	this.drawShip = function()
-	{
-		context.save();
-			context.beginPath();
-			
-			context.fillStyle = this.color;
-			context.translate(this.x,this.y);
-			context.rotate(this.angle*Math.PI/180);
-			context.ellipse(0,0,(this.width/2),(this.height/2),0,0,360 *Math.PI/180,false);
-			context.fill();
-			context.fillRect(0+this.width/2-3,0-this.height/10,this.width/4,this.height/5);
-			context.fillStyle = this.teamColor;
-			context.fillRect(0-this.width/20,0-this.height*0.75,this.width/10,this.height*1.5);
-			context.fillStyle = this.color;
-			context.closePath();
-	context.restore();
-	}
 	
 	this.move = function()
 	{
@@ -133,7 +107,14 @@ function GameObject(obj)
 	/*-----Sets or gets the radius value--------*/
 	this.radius = function(newRadius)
 	{
+		 if(newRadius==undefined)
+		 {
 			return this.width/2; 
+		 }
+		 else
+		 {
+			 return newRadius;
+		 }
 	}
 	
 	//Draws the collision points
@@ -149,5 +130,4 @@ function GameObject(obj)
 		context.fillRect(this.x-size/2, this.y-size/2, size, size);
 		context.restore();
 	}
-
 }
