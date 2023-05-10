@@ -49,7 +49,9 @@ function animate()
 		//Calculate acceleration modifiers (length and height of triangle)
 		player.ax = Math.cos(radians);
 		player.ay = Math.sin(radians);
-		
+		player.right = Math.cos(radians);
+		//console.log(player.right);
+		//player.right = Math.sin(radians);
 		player.vx += player.ax * player.force;
 		player.vy += player.ay * player.force;
 
