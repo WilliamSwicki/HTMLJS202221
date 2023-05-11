@@ -9,13 +9,13 @@ var player;
 var maxShot = 5000;
 var shot = [];
 var currentShot =0;
-var shotDelay = 60;
+var shotDelay = 0;
 var fireRate = 30;
 
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
 
-    player = new GameObject({x:500, y:canvas.height/2-100});
+    player = new GameObject({x:canvas.width/4, y:canvas.height/2});
 	player.height = 50;
 	player.angle;
 	player.rotationSpeed = 3;
@@ -23,6 +23,9 @@ var fireRate = 30;
 	player.ay =0;
 	player.force=0;
 	player.accelerationSpeed= 0.02;
+
+	island = new GameObject({x: canvas.width/2,y:canvas.height/2})
+	island.color="brown";
 
 	for(var i =0; i <=maxShot;i++)
 	{
@@ -41,19 +44,22 @@ function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
 
-	
 		var radians = player.angle * Math.PI/180;
 		var leftShotRadians = (player.angle-90)*Math.PI/180;
 		var rightShotRadians = (player.angle+90)*Math.PI/180;
+		var backRadians = (player.angle+180)*Math.PI/180;
 		//console.log(leftShotRadians);
 		//Calculate acceleration modifiers (length and height of triangle)
 		player.ax = Math.cos(radians);
 		player.ay = Math.sin(radians);
-		player.right = Math.cos(radians);
-		//console.log(player.right);
-		//player.right = Math.sin(radians);
+		player.right().y = Math.sin(radians);
+		//console.log(player.angle);
+		console.log(player.right());
+		//console.log(Math.cos(radians));
+		//move on angle
 		player.vx += player.ax * player.force;
 		player.vy += player.ay * player.force;
+
 
 	if(w)
 	{
@@ -94,7 +100,7 @@ function animate()
 		
 		//spwan shot on player
 		shot[currentShot].x=player.x+Math.cos(leftShotRadians)*25;
-		shot[currentShot].y=player.y+Math.sin(leftShotRadians)* 25;
+		shot[currentShot].y=player.y+Math.sin(leftShotRadians)*25;
 		
 		//make shot move
 		shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
@@ -110,13 +116,13 @@ function animate()
 		shot[currentShot].ax = Math.cos(rightShotRadians);
 		shot[currentShot].ay = Math.sin(rightShotRadians);
 		
-		shot[currentShot].x=player.x+Math.cos(rightShotRadians)*25;;
-		shot[currentShot].y=player.y+Math.sin(rightShotRadians)* 25;;
+		shot[currentShot].x=player.x+Math.cos(rightShotRadians)*25;
+		shot[currentShot].y=player.y+Math.sin(rightShotRadians)* 25;
 
 		shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
 		shot[currentShot].vy += player.vy + shot[currentShot].ay * shot[currentShot].force;
 		
-		shotDelay = fireRate;
+		//shotDelay = fireRate;
 
 		currentShot++;
 		//----------------bullet reset-------------
@@ -130,9 +136,10 @@ function animate()
 		//console.log(shot[currentShot].vy);
 		//console.log(shot[currentShot].ay);
 	}
+	//uncomment to allow spam fire
 	else
 	{
-		shotDelay =0;
+		//shotDelay =0;
 	}
 
 	player.vx *= fX;
@@ -141,11 +148,52 @@ function animate()
 	player.x += Math.round(player.vx);
 	player.y += Math.round(player.vy);
 
+	var sides = [
+		player.right(),
+		player.top(),
+		player.bottom(),
+		player.left()
+	]
+	
 	//wall colishion
-	if(player.y-player.height/2<0)
+	//top bottom walls
+	for(let i=0; i<sides.length; i++)
 	{
-		player.y=player.y+player.height/2;
-		player.force = 0;
+		while(sides[i].y>canvas.height)
+		{
+			player.y--
+			sides[i].y--
+		}	
+	}
+	for(let i=0; i<sides.length; i++)
+	{
+		while(sides[i].y<0)
+		{
+			player.y++
+			sides[i].y++
+		}	
+	}
+	//left right walls
+	for(let i=0; i<sides.length; i++)
+	{
+		while(sides[i].x>canvas.width)
+		{
+			player.x--
+			sides[i].x--
+		}	
+	}
+	for(let i=0; i<sides.length; i++)
+	{
+		while(sides[i].x<0)
+		{
+			player.x++
+			sides[i].x++
+		}	
+	}
+	//islands
+	while(island.hitTestObject(player))
+	{
+		player.x--
 	}
 	//make shots move for now
 	for(var i=0;i<currentShot;i++)
@@ -153,7 +201,8 @@ function animate()
 		shot[i].move();
 		shot[i].drawCircle();
 	}
-
+	
+	island.drawCircle();
     player.drawShip();
 	//player.drawRect();
 	player.drawDebug();

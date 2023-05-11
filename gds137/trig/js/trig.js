@@ -50,6 +50,7 @@ function animate()
 	
 	player.drawTriangle();
 	follower.drawTriangle();
+	player.drawDebug();
 }
 
 function angularMovement()
