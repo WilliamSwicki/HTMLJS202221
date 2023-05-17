@@ -26,6 +26,9 @@ var fireRate = 30;
 
 	island = new GameObject({x: canvas.width/2,y:canvas.height/2})
 	island.color="brown";
+	island.angle = 0;
+	island.width = 50;
+	island.height = 50;
 
 	for(var i =0; i <=maxShot;i++)
 	{
@@ -52,15 +55,17 @@ function animate()
 		//Calculate acceleration modifiers (length and height of triangle)
 		player.ax = Math.cos(radians);
 		player.ay = Math.sin(radians);
-		player.right().y = Math.sin(radians);
+		//player.right().y = Math.sin(radians);
 		//console.log(player.angle);
 		console.log(player.right());
+		//console.log(island.left().x);
+		//console.log(island.bottom());
 		//console.log(Math.cos(radians));
 		//move on angle
 		player.vx += player.ax * player.force;
 		player.vy += player.ay * player.force;
 
-
+	//player movement
 	if(w)
 	{
 		if(player.force<1)
@@ -70,11 +75,12 @@ function animate()
 	}
 	if(s)
 	{
-		if(player.force>0)
+		player.force=0;
+		/*if(player.force>0)
 		{
 		player.force-=player.accelerationSpeed;
 
-		}
+		}*/
 	}
 	if(a)
 	{
@@ -109,7 +115,7 @@ function animate()
 		shotDelay = fireRate;
 
 		currentShot++;
-		//------------------rihgt bullet-------------
+		//------------------right bullet-------------
 
 		shot[currentShot].vx=0;
 		shot[currentShot].vy=0;
@@ -164,42 +170,63 @@ function animate()
 			player.y--
 			sides[i].y--
 		}	
-	}
-	for(let i=0; i<sides.length; i++)
-	{
+
 		while(sides[i].y<0)
 		{
 			player.y++
 			sides[i].y++
 		}	
-	}
+
 	//left right walls
-	for(let i=0; i<sides.length; i++)
-	{
+
 		while(sides[i].x>canvas.width)
 		{
 			player.x--
 			sides[i].x--
 		}	
-	}
-	for(let i=0; i<sides.length; i++)
-	{
+
 		while(sides[i].x<0)
 		{
 			player.x++
 			sides[i].x++
 		}	
-	}
+
 	//islands
-	for(let i=0; i<sides.length; i++)
-	{
-		while(sides[i].x>island.x-island.width/2)
+
+		while(sides[i].x>island.left().x&&sides[i].y>island.top().y&&sides[i].y<island.bottom().y&&sides[i].x<island.right().x)
 		{
-			player.x--
-			sides[i].x--
-			player.force=0;
-		}	
+			//left right
+			if(sides[i].x>island.left().x&&sides[i].x<island.x-island.width/5)
+			{
+				player.x--
+				sides[i].x--
+				player.force=0;
+			}
+			if(sides[i].x<island.right().x&&sides[i].x>island.x+island.width/5)
+			{
+				player.x++
+				sides[i].x++
+				player.force=0;
+			}
+			//top bottom
+			if(sides[i].y>island.top().y&&sides[i].y<island.y-island.height/5)
+			{
+				player.y--
+				sides[i].y--
+				player.force=0;
+			}
+			if(sides[i].y<island.bottom().y&&sides[i].y>island.y+island.height/5)
+			{
+				player.y++
+				sides[i].y++
+				player.force=0;
+			}
+		}
+
 	}
+	console.log(island.x);
+	console.log(island.width);
+	console.log(island.height);
 	/*
 	-----This works for items-----
 	while(island.hitTestObject(player))
@@ -218,4 +245,5 @@ function animate()
     player.drawShip();
 	//player.drawRect();
 	player.drawDebug();
+	island.drawDebug();
 }

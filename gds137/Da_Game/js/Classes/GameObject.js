@@ -89,7 +89,7 @@ function GameObject(obj)
 	//---------Returns object's for the top, bottom, left and right of an object's bounding box.
 	this.left = function() 
 	{
-		return {x:this.x -Math.cos((player.angle+180)*Math.PI/180) * -this.width/2 , y:this.y+Math.sin((player.angle+180)*Math.PI/180)*this.width/2}
+		return {x:this.x -Math.cos((this.angle+180)*Math.PI/180) * -this.width/2 , y:this.y+Math.sin((this.angle+180)*Math.PI/180)*this.width/2}
 	}
 	this.right = function() 
 	{
@@ -98,11 +98,11 @@ function GameObject(obj)
 	
 	this.top = function() 
 	{
-		return {x:this.x - Math.cos((player.angle-90)*Math.PI/180)*-this.height/2, y:this.y-Math.sin((player.angle-90)*Math.PI/180) *-this.height/2}
+		return {x:this.x - Math.cos((this.angle-90)*Math.PI/180)*-this.height/2, y:this.y-Math.sin((this.angle-90)*Math.PI/180) *-this.height/2}
 	}
 	this.bottom = function() 
 	{
-		return {x:this.x + Math.cos((player.angle+90)*Math.PI/180) *this.height/2, y:this.y + Math.sin((player.angle+90)*Math.PI/180)*this.height/2}
+		return {x:this.x + Math.cos((this.angle+90)*Math.PI/180) *this.height/2, y:this.y + Math.sin((this.angle+90)*Math.PI/180)*this.height/2}
 	}
 	
 	this.hitTestObject = function(obj)
