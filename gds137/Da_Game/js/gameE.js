@@ -191,10 +191,22 @@ function animate()
 		}	
 	}
 	//islands
+	for(let i=0; i<sides.length; i++)
+	{
+		while(sides[i].x>island.x-island.width/2)
+		{
+			player.x--
+			sides[i].x--
+			player.force=0;
+		}	
+	}
+	/*
+	-----This works for items-----
 	while(island.hitTestObject(player))
 	{
-		player.x--
-	}
+		player.x--;
+		player.force =0;
+	}*/
 	//make shots move for now
 	for(var i=0;i<currentShot;i++)
 	{
@@ -202,7 +214,7 @@ function animate()
 		shot[i].drawCircle();
 	}
 	
-	island.drawCircle();
+	island.drawRect();
     player.drawShip();
 	//player.drawRect();
 	player.drawDebug();
