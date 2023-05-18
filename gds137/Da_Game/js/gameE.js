@@ -15,7 +15,7 @@ var fireRate = 30;
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
 
-    player = new GameObject({x:canvas.width/4, y:canvas.height/2});
+    player = new GameObject({x:100, y:canvas.height/2});
 	player.height = 50;
 	player.angle;
 	player.rotationSpeed = 3;
@@ -24,11 +24,15 @@ var fireRate = 30;
 	player.force=0;
 	player.accelerationSpeed= 0.02;
 
-	island = new GameObject({x: canvas.width/2,y:canvas.height/2})
+	/*island = new GameObject({x: canvas.width/2,y:canvas.height/2})
 	island.color="brown";
 	island.angle = 0;
 	island.width = 50;
-	island.height = 50;
+	island.height = 50;*/
+
+	var level = new Level();
+	//world[]
+	level.generate(level.room2);
 
 	for(var i =0; i <=maxShot;i++)
 	{
@@ -58,7 +62,7 @@ function animate()
 		//player.right().y = Math.sin(radians);
 		//console.log(player.angle);
 		console.log(player.right());
-		//console.log(island.left().x);
+		console.log(player.top());
 		//console.log(island.bottom());
 		//console.log(Math.cos(radians));
 		//move on angle
@@ -75,12 +79,11 @@ function animate()
 	}
 	if(s)
 	{
-		player.force=0;
-		/*if(player.force>0)
+		if(player.force>0)
 		{
 		player.force-=player.accelerationSpeed;
 
-		}*/
+		}
 	}
 	if(a)
 	{
@@ -158,7 +161,11 @@ function animate()
 		player.right(),
 		player.top(),
 		player.bottom(),
-		player.left()
+		player.left(),
+		player.topLeft(),
+		player.topRight(),
+		player.bottomLeft(),
+		player.bottomRight()
 	]
 	
 	//wall colishion
@@ -192,41 +199,43 @@ function animate()
 		}	
 
 	//islands
-
-		while(sides[i].x>island.left().x&&sides[i].y>island.top().y&&sides[i].y<island.bottom().y&&sides[i].x<island.right().x)
+		for(var g = 0; g < level.grid.length; g++)
 		{
-			//left right
-			if(sides[i].x>island.left().x&&sides[i].x<island.x-island.width/5)
-			{
-				player.x--
-				sides[i].x--
-				player.force=0;
-			}
-			if(sides[i].x<island.right().x&&sides[i].x>island.x+island.width/5)
-			{
-				player.x++
-				sides[i].x++
-				player.force=0;
-			}
-			//top bottom
-			if(sides[i].y>island.top().y&&sides[i].y<island.y-island.height/5)
-			{
-				player.y--
-				sides[i].y--
-				player.force=0;
-			}
-			if(sides[i].y<island.bottom().y&&sides[i].y>island.y+island.height/5)
-			{
-				player.y++
-				sides[i].y++
-				player.force=0;
-			}
-		}
+			level.grid[g].drawRect();
 
+			while(level.grid[g].hitTestPoint(sides[i]))
+			{
+				//left right
+				if(sides[i].x<level.grid[g].x-level.grid[g].width/4)
+				{
+					player.x--
+					sides[i].x--
+					player.force=0;
+				}
+				if(sides[i].x>level.grid[g].x+level.grid[g].width/4)
+				{
+					player.x++
+					sides[i].x++
+					player.force=0;
+				}
+				//top bottom
+				if(sides[i].y<level.grid[g].y-level.grid[g].height/4)
+				{
+					player.y--
+					sides[i].y--
+					player.force=0;
+				}
+				if(sides[i].y>level.grid[g].y+level.grid[g].height/4)
+				{
+					player.y++
+					sides[i].y++
+					player.force=0;
+				}
+			}
+			level.grid[g].drawDebug();
+		}
 	}
-	console.log(island.x);
-	console.log(island.width);
-	console.log(island.height);
+
 	/*
 	-----This works for items-----
 	while(island.hitTestObject(player))
@@ -241,9 +250,10 @@ function animate()
 		shot[i].drawCircle();
 	}
 	
-	island.drawRect();
+	//island.drawRect();
     player.drawShip();
+	
 	//player.drawRect();
 	player.drawDebug();
-	island.drawDebug();
+	//island.drawDebug();
 }

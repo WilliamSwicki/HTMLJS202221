@@ -95,7 +95,6 @@ function GameObject(obj)
 	{
 		return {x: this.x + Math.cos(this.angle * Math.PI/180)*this.width/2 , y:this.y+Math.sin(this.angle * Math.PI/180)*this.width/2}
 	}
-	
 	this.top = function() 
 	{
 		return {x:this.x - Math.cos((this.angle-90)*Math.PI/180)*-this.height/2, y:this.y-Math.sin((this.angle-90)*Math.PI/180) *-this.height/2}
@@ -104,7 +103,23 @@ function GameObject(obj)
 	{
 		return {x:this.x + Math.cos((this.angle+90)*Math.PI/180) *this.height/2, y:this.y + Math.sin((this.angle+90)*Math.PI/180)*this.height/2}
 	}
-	
+	this.topRight = function()
+	{
+		return {x: this.x + Math.cos((this.angle-45) * Math.PI/180)*this.width/3, y:this.y +Math.sin((this.angle-45) * Math.PI/180)*this.width/3}
+	}
+	this.bottomLeft = function()
+	{
+		return {x: this.x + Math.cos((this.angle+135) * Math.PI/180)*this.width/3, y:this.y+Math.sin((this.angle+135)*Math.PI/180) *this.width/3}
+	}
+	this.topLeft = function()
+	{
+		return {x: this.x + Math.cos((this.angle-135) * Math.PI/180)*this.width/3, y:this.y-Math.sin((this.angle-135)*Math.PI/180) *-this.width/3}
+	}
+	this.bottomRight = function()
+	{
+		return {x: this.x + Math.cos((this.angle+45) * Math.PI/180)*this.width/3, y:this.y+Math.sin((this.angle+45)*Math.PI/180) *this.width/3}
+	}
+
 	this.hitTestObject = function(obj)
 	{
 		if(this.left().x <= obj.right().x && 
@@ -146,6 +161,10 @@ function GameObject(obj)
 		context.fillRect(this.right().x-size/2, this.right().y-size/2, size, size);
 		context.fillRect(this.top().x-size/2, this.top().y-size/2, size, size);
 		context.fillRect(this.bottom().x-size/2, this.bottom().y-size/2, size, size);
+		context.fillRect(this.topRight().x-size/2,this.topRight().y-size/2,size,size);
+		context.fillRect(this.bottomLeft().x-size/2,this.bottomLeft().y-size/2,size,size);
+		context.fillRect(this.topLeft().x-size/2,this.topLeft().y-size/2,size,size);
+		context.fillRect(this.bottomRight().x-size/2,this.bottomRight().y-size/2,size,size);
 		context.fillRect(this.x-size/2, this.y-size/2, size, size);
 		context.restore();
 	}
