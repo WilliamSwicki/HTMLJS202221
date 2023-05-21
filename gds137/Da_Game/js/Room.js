@@ -40,9 +40,9 @@ function Level()
         [2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
 ]
     this.room3 = [
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [2,2,2,0,0,0,0,0,2,2,2,2,0,0,0,0,0,2,2,2],
+        [2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,2,2],
+        [0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -53,27 +53,52 @@ function Level()
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0],
+        [2,2,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,2,2],
+        [2,2,2,0,0,0,0,0,2,2,2,2,0,0,0,0,0,2,2,2],
 ]
-    this.shop = [[]]
 
+    this.shop = [[]]
+    
+    this.world = [this.room1,this.room2,this.room3];
     this.grid = [];
 
     this.x =0;
     this.y =0;
 
-    this.generate = function(level)
+    this.generate = function(level,width,height,offset)
     {
         var tileWidth;
         var tileHeight;
 
-        tileWidth = canvas.width/level[0].length;
-        tileHeight = canvas.height/level.length;
+        if(width != undefined)
+		{
+			tileWidth = width;
+		}
+		else
+		{
+			tileWidth = canvas.width/level[0].length;
+		}
+		
+		if(height != undefined)
+		{
+			tileHeight = height;
+		}
+		else
+		{
+			tileHeight = canvas.height/level.length;
+		}
+        if(offset != undefined)
+        {
+            offset = offset;
+        }
+        else
+        {
+            offset=0;
+        }
 
         var g =0;
-        var x = tileWidth/2;
+        var x = tileWidth/2+(canvas.width*offset);
         var y = tileHeight/2;
 
         for(var r =0;r<level.length;r++)
@@ -99,7 +124,7 @@ function Level()
                 x+=tileWidth;
             }
             y+=tileHeight;
-            x=tileWidth/2;
+            x=tileWidth/2+(canvas.width*offset);
         }
     }
 }

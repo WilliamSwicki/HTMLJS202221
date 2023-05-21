@@ -1,4 +1,4 @@
 function rand(low, high)
 {
-		return Math.random() * (high - low) + low;
+	return Math.round(Math.random() * (high - low) + low);
 }

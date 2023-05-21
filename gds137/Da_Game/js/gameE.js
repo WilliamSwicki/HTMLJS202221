@@ -31,8 +31,12 @@ var fireRate = 30;
 	island.height = 50;*/
 
 	var level = new Level();
-	//world[]
-	level.generate(level.room2);
+	var pick
+	
+	pick = rand(0,level.world.length-1);
+	level.generate(level.world[1],50,50,0);
+	//level.generate(level.world[0],50,50);
+	console.log(pick);
 
 	for(var i =0; i <=maxShot;i++)
 	{
@@ -61,8 +65,8 @@ function animate()
 		player.ay = Math.sin(radians);
 		//player.right().y = Math.sin(radians);
 		//console.log(player.angle);
-		console.log(player.right());
-		console.log(player.top());
+		//console.log(player.right());
+		//console.log(player.top());
 		//console.log(island.bottom());
 		//console.log(Math.cos(radians));
 		//move on angle
@@ -185,7 +189,13 @@ function animate()
 		}	
 
 	//left right walls
-
+		while(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
+		{
+			level.world.x--
+			player.x--
+			sides[i]--
+			player.force=0
+		}
 		while(sides[i].x>canvas.width)
 		{
 			player.x--
@@ -232,7 +242,15 @@ function animate()
 					player.force=0;
 				}
 			}
-			level.grid[g].drawDebug();
+			if(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
+			{
+				//level.grid[g].x-- doesnot work
+				player.x--
+				sides[i]--
+				player.force=0
+			}
+			console.log(level.grid[0].x);
+			//level.grid[g].drawDebug();
 		}
 	}
 
@@ -252,7 +270,7 @@ function animate()
 	
 	//island.drawRect();
     player.drawShip();
-	
+	//console.log(level.x);
 	//player.drawRect();
 	player.drawDebug();
 	//island.drawDebug();
