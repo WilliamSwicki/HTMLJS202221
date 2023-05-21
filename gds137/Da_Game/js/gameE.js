@@ -31,13 +31,11 @@ var fireRate = 30;
 	island.height = 50;*/
 
 	var level = new Level();
-	var pick
-	
-	pick = rand(0,level.world.length-1);
-	level.generate(level.world[1],50,50,0);
-	//level.generate(level.world[0],50,50);
-	console.log(pick);
-
+	for(let o =0;o<3;o++)
+	{
+	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);
+	console.log(o);
+	}
 	for(var i =0; i <=maxShot;i++)
 	{
 		shot[i]= new GameObject({force:3,width:10,height:10,color:"#5a5a5a"});
@@ -189,18 +187,18 @@ function animate()
 		}	
 
 	//left right walls
-		while(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
+		/*while(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
 		{
 			level.world.x--
 			player.x--
 			sides[i]--
 			player.force=0
-		}
-		while(sides[i].x>canvas.width)
+		}*/
+		/*while(sides[i].x>canvas.width)
 		{
 			player.x--
 			sides[i].x--
-		}	
+		}*/
 
 		while(sides[i].x<0)
 		{
@@ -242,16 +240,17 @@ function animate()
 					player.force=0;
 				}
 			}
+		}	
 			if(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
 			{
-				//level.grid[g].x-- doesnot work
-				player.x--
-				sides[i]--
+				level.x=level.x - canvas.width; //doesnot work
+				player.x= player.x - canvas.width + player.width
+				sides[i].x=sides[i].x- canvas.width + player.width
 				player.force=0
 			}
-			console.log(level.grid[0].x);
+			//console.log(level.grid[0].x);
 			//level.grid[g].drawDebug();
-		}
+		
 	}
 
 	/*
