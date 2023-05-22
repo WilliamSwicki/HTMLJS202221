@@ -255,7 +255,10 @@ function animate()
 		}
 			//console.log(level.grid[0].x);
 			//level.grid[g].drawDebug();
-		
+		/*for(let g = 0; g<level.bShip.length;g++)
+		{
+			level.bShip.drawShip();
+		}*/
 	}
 
 	/*
