@@ -31,11 +31,13 @@ var fireRate = 30;
 	island.height = 50;*/
 
 	var level = new Level();
-	for(let o =0;o<3;o++)
-	{
+	var level2 = new Level();
+	var level3 = new Level();
+
 	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);
-	console.log(o);
-	}
+	level2.generate(level2.world[rand(0,level2.world.length-1)],50,50,1);
+	level3.generate(level3.world[rand(0,level3.world.length-1)],50,50,2);
+
 	for(var i =0; i <=maxShot;i++)
 	{
 		shot[i]= new GameObject({force:3,width:10,height:10,color:"#5a5a5a"});
@@ -207,10 +209,10 @@ function animate()
 		}	
 
 	//islands
+		//level 1
 		for(var g = 0; g < level.grid.length; g++)
 		{
 			level.grid[g].drawRect();
-
 			while(level.grid[g].hitTestPoint(sides[i]))
 			{
 				//left right
@@ -240,14 +242,105 @@ function animate()
 					player.force=0;
 				}
 			}
-		}	
+			/*if(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
+			{
+				for(g = 0;g<level.grid.length; g++)
+				{
+				level.grid[g].x=level.grid[g].x - canvas.width; 
+				}
+				player.x= player.x - canvas.width + player.width
+				sides[i].x=sides[i].x- canvas.width + player.width
+				player.force=0
+			}*/
+				
+			
+		}
+		//level 2
+		for(var g = 0; g < level2.grid.length; g++)
+		{
+			level2.grid[g].drawRect();
+			while(level2.grid[g].hitTestPoint(sides[i]))
+			{
+				//left right
+				if(sides[i].x<level2.grid[g].x-level2.grid[g].width/4)
+				{
+					player.x--
+					sides[i].x--
+					player.force=0;
+				}
+				if(sides[i].x>level2.grid[g].x+level2.grid[g].width/4)
+				{
+					player.x++
+					sides[i].x++
+					player.force=0;
+				}
+				//top bottom
+				if(sides[i].y<level2.grid[g].y-level2.grid[g].height/4)
+				{
+					player.y--
+					sides[i].y--
+					player.force=0;
+				}
+				if(sides[i].y>level2.grid[g].y+level2.grid[g].height/4)
+				{
+					player.y++
+					sides[i].y++
+					player.force=0;
+				}
+			}
+		}
+		//level 3
+		for(var g = 0; g < level3.grid.length; g++)
+		{
+			level3.grid[g].drawRect();
+			while(level3.grid[g].hitTestPoint(sides[i]))
+			{
+				//left right
+				if(sides[i].x<level3.grid[g].x-level3.grid[g].width/4)
+				{
+					player.x--
+					sides[i].x--
+					player.force=0;
+				}
+				if(sides[i].x>level3.grid[g].x+level3.grid[g].width/4)
+				{
+					player.x++
+					sides[i].x++
+					player.force=0;
+				}
+				//top bottom
+				if(sides[i].y<level3.grid[g].y-level3.grid[g].height/4)
+				{
+					player.y--
+					sides[i].y--
+					player.force=0;
+				}
+				if(sides[i].y>level3.grid[g].y+level3.grid[g].height/4)
+				{
+					player.y++
+					sides[i].y++
+					player.force=0;
+				}
+			}
 			if(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
 			{
-				level.x=level.x - canvas.width; //doesnot work
+				for(g = 0;g<level2.grid.length; g++)
+				{
+				level2.grid[g].x=level2.grid[g].x - canvas.width; 
+				}
+				for(g = 0;g<level.grid.length; g++)
+				{
+				level.grid[g].x=level.grid[g].x - canvas.width; 
+				}
+				for(g = 0;g<level3.grid.length; g++)
+				{
+				level3.grid[g].x=level3.grid[g].x - canvas.width; 
+				}
 				player.x= player.x - canvas.width + player.width
 				sides[i].x=sides[i].x- canvas.width + player.width
 				player.force=0
 			}
+		}
 			//console.log(level.grid[0].x);
 			//level.grid[g].drawDebug();
 		
