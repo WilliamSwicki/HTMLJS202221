@@ -58,7 +58,6 @@ function GameObject(obj)
 			context.closePath();
 			context.fill();
 		context.restore();
-		
 	}	
 
 	this.drawShip = function()
