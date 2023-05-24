@@ -1,7 +1,3 @@
-function rand(low,high)
-{
-    Math.random()*(high-low)+low;
-}
 
 function GameThing(obj)
 {
@@ -40,6 +36,10 @@ function GameThing(obj)
 		this.x += this.vx;
    		this.y += this.vy;
    	}
+    this.radius = function(newRadius)
+    {
+       return this.width/2; 
+    }
 
     this.drawRect = function()
 	{

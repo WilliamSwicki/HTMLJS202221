@@ -11,19 +11,19 @@ function press(e)
 	{
 		a = true;
 	}
-    if(e.keycode == 68)
-    {
-        d = true;
-    }
+    if(e.keyCode == 68)
+	{
+		d = true;
+	}
 }
 
 function release(e)
 {
-    if(e.keycode == 65)
+    if(e.keyCode == 65)
     {
         a = false;
     }
-    if(e.keycode == 68)
+    if(e.keyCode == 68)
     {
         d = false;
     }
