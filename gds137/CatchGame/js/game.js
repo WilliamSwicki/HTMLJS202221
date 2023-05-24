@@ -91,7 +91,11 @@ function animate()
             player.color="red";
             setTimeout(playerHit,500);
             score = 0;
+             console.log(player.left());
         }
+    }    
+    for(i=0;i<5;i++)
+    {
         if(player.hitTestObject(aBall[i]))
         {
             aBall[i].x=rand(aBall[i].width/2,canvas.width-aBall[i].width/2);
@@ -100,9 +104,9 @@ function animate()
             player.color="green";
             setTimeout(playerHit,500);
             score++;
+        
+       
         }
-        console.log(player.hitTestObject(bBall[i]));
-
         bBall[i].drawCircle();
         aBall[i].drawRect();
     }
