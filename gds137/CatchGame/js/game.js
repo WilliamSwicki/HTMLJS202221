@@ -14,13 +14,22 @@ var interval;
     player.y= canvas.height-25-player.height/2
     player.ax= 1;
     player.force = 1;
-    var aBall=[];
-    var bBall=[];
 
-    var dicks =0;
-    dicks = rand(20,30);
-        console.log(dicks);
+    playerHit = function()
+    {
+        player.color="#ffff00";
+    }
 
+    var score =0;
+
+    var bBall=[]
+    var aBall=[]
+    var gravity =.25;
+    for(let i =0;i<5;i++)
+    {
+    aBall[i] = new GameThing({width:25 , height:25, color:"#a020f0", y:850});
+    bBall[i]=new GameThing ({width:25 , height:25, color:"#ffc0cb", y:850});
+    }
 
 function animate()
 {
@@ -47,16 +56,59 @@ function animate()
         player.x=player.width/2;
     }
 
-    for(let i=0;i<5;i++)
+    for(i=0;i<5;i++)
     {
-        //bBall[i]=new GameThing ({width:25 , height:25, color:"#ffc0cb",x:rand(100,900) });
-        //bBall[i].;//(bBall[i].width/2,canvas.width-bBall[i].width/2)
+        //thing go fall
+        bBall[i].vy+=gravity;
+        bBall[i].y+=bBall[i].vy;
+        aBall[i].vy+=gravity;
+        aBall[i].y+=aBall[i].vy;
+
+        if(aBall[i].y>canvas.height)
+        {
+        aBall[i].x=rand(aBall[i].width/2,canvas.width-aBall[i].width/2);
+        aBall[i].y=rand(-400,0);
+        aBall[i].vy=rand(0.1,0.5);
+        }
+        if(bBall[i].y>canvas.height)
+        {
+        bBall[i].x=rand(bBall[i].width/2,canvas.width-bBall[i].width/2);
+        bBall[i].y=rand(-400,0);
+        bBall[i].vy=rand(0.1,0.5);
+        }
         
-       // aBall[i]=new GameThing({width:25 , height:25, color:"#ao2ofo", x: rand(20,30)});
-        
-        
+        if(player.hitTestObject(bBall[i]))
+        {
+            for(i=0;i<5;i++)
+            {
+            aBall[i].x=rand(aBall[i].width/2,canvas.width-aBall[i].width/2);
+            aBall[i].y=rand(-400,0);
+            aBall[i].vy=rand(0.1,0.5);
+            bBall[i].x=rand(bBall[i].width/2,canvas.width-bBall[i].width/2);
+            bBall[i].y=rand(-400,0);
+            bBall[i].vy=rand(0.1,0.5);
+            }
+            player.color="red";
+            setTimeout(playerHit,500);
+            score = 0;
+        }
+        if(player.hitTestObject(aBall[i]))
+        {
+            aBall[i].x=rand(aBall[i].width/2,canvas.width-aBall[i].width/2);
+            aBall[i].y=rand(-400,0);
+            aBall[i].vy=rand(0.1,0.5);
+            player.color="green";
+            setTimeout(playerHit,500);
+            score++;
+        }
+        console.log(player.hitTestObject(bBall[i]));
+
         bBall[i].drawCircle();
         aBall[i].drawRect();
     }
     player.drawRect();
+
+    context.font="bold 30px Arial";
+    context.fillStyle=this.color;
+    context.fillText("Score: " + score,50,50);
 }

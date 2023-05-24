@@ -25,7 +25,7 @@ function GameThing(obj)
     
     this.gravity = function(grav)
     {
-        this.vy+=grav;
+       return this.vy+=grav;
     }
     this.friction =function(fx)
     {
