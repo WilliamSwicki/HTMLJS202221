@@ -62,7 +62,7 @@ function Level()
     
     this.world = [this.room1,this.room2,this.room3];
     this.grid = [];
-    this.bShop = [];
+    this.bShip = [];
 
     this.x =0;
     this.y =0;
@@ -99,6 +99,7 @@ function Level()
         }
 
         var g =0;
+        var e =0;
         var x = tileWidth/2+(canvas.width*offset);
         var y = tileHeight/2;
 
@@ -122,11 +123,12 @@ function Level()
                        g++;
                     break;
                     case 3:
-                        this.grid[g]= new GameObject({width:tileWidth, height:tileHeight});
-                        this.grid[g].x=x;
-                        this.grid[g].y=y;
-                        this.grid[g].color = "blue";
-                        g++;
+                        this.bShip[e]= new GameObject({width:tileWidth, height:tileHeight});
+                        this.bShip[e].x=x;
+                        this.bShip[e].y=y;
+                        this.bShip[e].color = "brown";
+                        this.bShip[e].teamColor = "red";
+                        e++;
                         break;
                 }
                 x+=tileWidth;

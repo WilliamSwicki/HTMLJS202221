@@ -203,7 +203,11 @@ function animate()
 			player.x++
 			sides[i].x++
 		}	
-
+	//goons to shoot
+	for(var e=0;e<level.bShip.length;e++)
+	{
+		level.bShip[e].drawShip();
+	}
 	//islands
 		//level 1
 		for(var g = 0; g < level.grid.length; g++)
