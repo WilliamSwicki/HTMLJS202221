@@ -13,6 +13,7 @@ function GameObject(obj)
 		this.vx = 0;
 		this.vy = 0;
 		this.angle =0;
+		this.angleRotate =0;
 		this.rotationSpeed = 2;
 		this.accelerationSpeed =1;
 		this.dx;

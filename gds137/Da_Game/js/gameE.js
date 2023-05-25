@@ -23,16 +23,16 @@ var fireRate = 30;
 	player.ay =0;
 	player.force=0;
 	player.accelerationSpeed= 0.02;
+	player.color = "brown";
 
-	/*island = new GameObject({x: canvas.width/2,y:canvas.height/2})
-	island.color="brown";
-	island.angle = 0;
-	island.width = 50;
-	island.height = 50;*/
+	hiddenPoint = new GameObject({x:player.x,y:player.y});
+	hiddenPoint.height = 15;
+	hiddenPoint.width = 15;
+	hiddenPoint.color = "white";
 
 	var level = new Level();
 
-	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);
+	level.generate(level.world[2],50,50,0);//rand(0,level.world.length-1)
 
 	for(var i =0; i <=maxShot;i++)
 	{
@@ -69,6 +69,23 @@ function animate()
 		player.vx += player.ax * player.force;
 		player.vy += player.ay * player.force;
 
+	var hdx = player.x - hiddenPoint.x;
+	var hdy = player.y - hiddenPoint.y;
+
+	var hdist = Math.sqrt(hdx*hdx+hdy*hdy);
+	//--------------------------hidden points ARE GOING TO BECOME A ARRAY---------------------------------
+	if(dist<=300)
+	{
+		hiddenPoint.angleRotate-=1;
+		var rotateRadians = hiddenPoint.angleRotate * Math.PI/180;
+		hiddenPoint.x = player.x + Math.cos(rotateRadians)*300;
+		hiddenPoint.y = player.y + Math.sin(rotateRadians)*300;
+	}
+	else
+	{
+	hiddenPoint.x +=hdx*0.1;
+	hiddenPoint.y +=hdy*0.1;
+	}
 	//player movement
 	if(w)
 	{
@@ -82,7 +99,6 @@ function animate()
 		if(player.force>0)
 		{
 		player.force-=player.accelerationSpeed;
-
 		}
 	}
 	if(a)
@@ -185,27 +201,50 @@ function animate()
 		}	
 
 	//left right walls
-		/*while(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
-		{
-			level.world.x--
-			player.x--
-			sides[i]--
-			player.force=0
-		}*/
-		/*while(sides[i].x>canvas.width)
+		
+		while(sides[i].x>canvas.width)
 		{
 			player.x--
 			sides[i].x--
-		}*/
+		}
 
 		while(sides[i].x<0)
 		{
 			player.x++
 			sides[i].x++
 		}	
-	//goons to shoot
+	
 	for(var e=0;e<level.bShip.length;e++)
 	{
+		level.bShip[e].accelerationSpeed = 0.2;
+		level.bShip[e].force = 0;
+		var dx = hiddenPoint.x - level.bShip[e].x;
+		var dy = hiddenPoint.y - level.bShip[e].y;
+		var dist = Math.sqrt(dx*dx+dy*dy);
+
+		var pointRadians = Math.atan2(dy,dx);
+
+		level.bShip[e].angle=pointRadians*180/Math.PI
+		
+		level.bShip[e].ax = Math.cos(pointRadians);
+		level.bShip[e].ay = Math.sin(pointRadians);
+		
+		if(level.bShip[e].force<1)
+		{
+			level.bShip[e].force+=level.bShip[e].accelerationSpeed;
+		}
+
+		
+
+		level.bShip[e].vx = level.bShip[e].ax * level.bShip[e].force;
+		level.bShip[e].vy = level.bShip[e].ay * level.bShip[e].force;
+		level.bShip[e].angleRotate= pointRadians * 180/Math.PI - 180
+
+		level.bShip[e].move();
+		console.log(dist);
+		console.log(hiddenPoint.x);
+		
+		
 		level.bShip[e].drawShip();
 	}
 	//islands
@@ -243,7 +282,7 @@ function animate()
 				}
 			}
 
-			if(sides[i].x>canvas.width) // add an extra conditnol to check for enemies
+			if(sides[i].x>canvas.width && eAlive==0) // add an extra conditnol to check for enemies
 			{
 				
 				for(g = 0;g<level.grid.length; g++)
@@ -284,5 +323,6 @@ function animate()
 	//console.log(level.x);
 	//player.drawRect();
 	player.drawDebug();
+	hiddenPoint.drawCircle();
 	//island.drawDebug();
 }
