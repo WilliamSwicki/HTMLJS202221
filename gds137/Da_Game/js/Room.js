@@ -63,6 +63,7 @@ function Level()
     this.world = [this.room1,this.room2,this.room3];
     this.grid = [];
     this.bShip = [];
+    this.shipTarget =[];
 
     this.x =0;
     this.y =0;
@@ -130,9 +131,9 @@ function Level()
                         this.bShip[e].color = "brown";
                         this.bShip[e].teamColor = "red";
                         eAlive++;
-                        this.shipTarget[e]=new GameObject({width:15,height:15});
-                        this.shipTarget[e].x=player.x;
-                        this.shipTarget[e].y=player.y;
+                        this.shipTarget[e] =new GameObject({width:15,height:15});
+                        this.shipTarget[e].x=this.bShip[e].x;
+                        this.shipTarget[e].y=this.bShip[e].y;
                         e++;
                         break;
                 }

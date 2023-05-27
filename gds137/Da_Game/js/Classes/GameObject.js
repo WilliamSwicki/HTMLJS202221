@@ -120,6 +120,17 @@ function GameObject(obj)
 		return {x: this.x + Math.cos((this.angle+45) * Math.PI/180)*this.width/3, y:this.y+Math.sin((this.angle+45)*Math.PI/180) *this.width/3}
 	}
 
+	this.sides = [
+		this.right(),
+		this.top(),
+		this.bottom(),
+		this.left(),
+		this.topLeft(),
+		this.topRight(),
+		this.bottomLeft(),
+		this.bottomRight()
+	]
+
 	this.hitTestObject = function(obj)
 	{
 		if(this.left().x <= obj.right().x && 
