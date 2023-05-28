@@ -22,8 +22,9 @@ function GameObject(obj)
 	//whether or not the object can jump
 	this.canJump = false;
 	this.jumpHeight = -25;
-	//var for bullets
+	//var for combat
 	this.damage = 0;
+	this.health = 5;
 	
 	//------Allows us to pass object literals into the class to define its properties--------//
 		//------This eliminate the need to pass in the property arguments in a specific order------------//
