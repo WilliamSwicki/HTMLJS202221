@@ -7,12 +7,15 @@ var player;
 
 //bullet vars
 var maxShot = 5000;
+var eMaxShot = 5000;
 var shot = [];
 var currentShot =0;
 var eShot = [];
 var eCurrentShot =0;
 var shotDelay = 0;
 var fireRate = 30;
+var eShotDelay = 0;
+var eFireRate = 30;
 
 	canvas = document.getElementById("canvas");
 	context = canvas.getContext("2d");
@@ -27,11 +30,6 @@ var fireRate = 30;
 	player.accelerationSpeed= 0.02;
 	player.color = "brown";
 
-	hiddenPoint = new GameObject({x:player.x,y:player.y});
-	hiddenPoint.height = 15;
-	hiddenPoint.width = 15;
-	hiddenPoint.color = "white";
-
 	var level = new Level();
 
 	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);//rand(0,level.world.length-1)
@@ -42,7 +40,15 @@ var fireRate = 30;
 		shot[i].x=player.x;
 		shot[i].y=-100;
 	}
-
+	function generateShot(obj)
+	{
+	for(var i =0; i <=eMaxShot;i++)
+	{
+		eShot[i]= new GameObject({force:3,width:10,height:10,color:"#c73232"});
+		eShot[i].x=obj.x;
+		eShot[i].y=-100;
+	}
+	}
 	var fX = .85;
 	var fY = .85;
 
@@ -70,11 +76,6 @@ function animate()
 		//move on angle
 		player.vx += player.ax * player.force;
 		player.vy += player.ay * player.force;
-
-	var hdx = player.x - hiddenPoint.x;
-	var hdy = player.y - hiddenPoint.y;
-
-	var hdist = Math.sqrt(hdx*hdx+hdy*hdy);
 	
 	//player movement
 	if(w)
@@ -207,6 +208,7 @@ function animate()
 	
 	for(var e=0;e<level.bShip.length;e++)
 	{
+		generateShot(level.bShip[e])
 		for(var g = 0; g < level.grid.length; g++)
 		{
 		var bSides = [
@@ -232,6 +234,9 @@ function animate()
 		var tdy = player.y - level.shipTarget[e].y;
 		var tdist = Math.sqrt(tdx*tdx+tdy*tdy);
 		var targetRadians = Math.atan2(tdy,tdx);
+		//------------Enemy shot angles---------------
+		var eLeftShotRadians = (level.bShip[e].angle-90)*Math.PI/180;
+		var eRightShotRadians = (level.bShip[e].angle+90)*Math.PI/180;
 		
 		//-----------target point colishions----------
 		//top bottom
@@ -297,47 +302,13 @@ function animate()
 		level.bShip[e].angleRotate= pointRadians * 180/Math.PI - 180;
 
 		//enemy shooting 
-	//----------------left bullet--------------
-
-	shot[currentShot].vx=0;
-	shot[currentShot].vy=0;
-	//calulate shot angle
-	shot[currentShot].ax = Math.cos(leftShotRadians);
-	shot[currentShot].ay = Math.sin(leftShotRadians);
-	
-	//spwan shot on player
-	shot[currentShot].x=player.x+Math.cos(leftShotRadians)*25;
-	shot[currentShot].y=player.y+Math.sin(leftShotRadians)*25;
-	
-	//make shot move
-	shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
-	shot[currentShot].vy += player.vy + shot[currentShot].ay * shot[currentShot].force;
-	
-	shotDelay = fireRate;
-
-	currentShot++;
-	//------------------right bullet-------------
-
-	shot[currentShot].vx=0;
-	shot[currentShot].vy=0;
-	shot[currentShot].ax = Math.cos(rightShotRadians);
-	shot[currentShot].ay = Math.sin(rightShotRadians);
-	
-	shot[currentShot].x=player.x+Math.cos(rightShotRadians)*25;
-	shot[currentShot].y=player.y+Math.sin(rightShotRadians)* 25;
-
-	shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
-	shot[currentShot].vy += player.vy + shot[currentShot].ay * shot[currentShot].force;
-	
-	//shotDelay = fireRate;
-
-	currentShot++;
-	//----------------bullet reset-------------
-
-	if(currentShot>=maxShot)
+		eShotDelay--
+	if(eShotDelay<= 0)
 	{
-		currentShot =0;
+	enemyShoot(eLeftShotRadians,eRightShotRadians,level.bShip[e]);
+	eShotDelay=eFireRate;
 	}
+	console.log(eShotDelay);
 	//islands
 		//level 1
 		
@@ -430,10 +401,7 @@ function animate()
 		level.shipTarget[e].drawCircle();
 		//console.log(level.grid[0].x);
 	}		//level.grid[g].drawDebug();
-		/*for(let g = 0; g<level.bShip.length;g++)
-		{
-			level.bShip.drawShip();
-		}*/
+
 	}
 
 	/*
@@ -449,12 +417,57 @@ function animate()
 		shot[i].move();
 		shot[i].drawCircle();
 	}
+	for(var i=0;i<eCurrentShot;i++)
+	{
+		eShot[i].move();
+		eShot[i].drawCircle();
+	}
 	
 	//island.drawRect();
     player.drawShip();
 	//console.log(level.x);
 	//player.drawRect();
 	player.drawDebug();
-	hiddenPoint.drawCircle();
+
 	//island.drawDebug();
+}
+function  enemyShoot(eLeftShotRadians,eRightShotRadians,obj)
+{
+	
+	eShot[eCurrentShot].vx=0;
+	eShot[eCurrentShot].vy=0;
+	//calulate shot angle
+	eShot[eCurrentShot].ax = Math.cos(eLeftShotRadians);
+	eShot[eCurrentShot].ay = Math.sin(eLeftShotRadians);
+	
+	//spwan shot on player
+	eShot[eCurrentShot].x=obj.x+Math.cos(eLeftShotRadians)*25;
+	eShot[eCurrentShot].y=obj.y+Math.sin(eLeftShotRadians)*25;
+	
+	//make shot move
+	eShot[eCurrentShot].vx += eShot[eCurrentShot].ax * eShot[eCurrentShot].force;
+	eShot[eCurrentShot].vy += eShot[eCurrentShot].ay * eShot[eCurrentShot].force;
+
+	eCurrentShot++;
+	//------------------right bullet-------------
+
+	eShot[eCurrentShot].vx=0;
+	eShot[eCurrentShot].vy=0;
+	eShot[eCurrentShot].ax = Math.cos(eRightShotRadians);
+	eShot[eCurrentShot].ay = Math.sin(eRightShotRadians);
+	
+	eShot[eCurrentShot].x=obj.x+Math.cos(eRightShotRadians)*25;
+	eShot[eCurrentShot].y=obj.y+Math.sin(eRightShotRadians)* 25;
+
+	eShot[eCurrentShot].vx += eShot[eCurrentShot].ax * eShot[eCurrentShot].force;
+	eShot[eCurrentShot].vy += eShot[eCurrentShot].ay * eShot[eCurrentShot].force;
+
+	eCurrentShot++;
+	
+	//----------------bullet reset-------------
+
+	if(eCurrentShot>=eMaxShot)
+	{
+		eCurrentShot =0;
+	}
 }
