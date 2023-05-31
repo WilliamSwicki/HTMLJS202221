@@ -9,6 +9,8 @@ var player;
 var maxShot = 5000;
 var shot = [];
 var currentShot =0;
+var eShot = [];
+var eCurrentShot =0;
 var shotDelay = 0;
 var fireRate = 30;
 
@@ -295,7 +297,47 @@ function animate()
 		level.bShip[e].angleRotate= pointRadians * 180/Math.PI - 180;
 
 		//enemy shooting 
+	//----------------left bullet--------------
+
+	shot[currentShot].vx=0;
+	shot[currentShot].vy=0;
+	//calulate shot angle
+	shot[currentShot].ax = Math.cos(leftShotRadians);
+	shot[currentShot].ay = Math.sin(leftShotRadians);
 	
+	//spwan shot on player
+	shot[currentShot].x=player.x+Math.cos(leftShotRadians)*25;
+	shot[currentShot].y=player.y+Math.sin(leftShotRadians)*25;
+	
+	//make shot move
+	shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
+	shot[currentShot].vy += player.vy + shot[currentShot].ay * shot[currentShot].force;
+	
+	shotDelay = fireRate;
+
+	currentShot++;
+	//------------------right bullet-------------
+
+	shot[currentShot].vx=0;
+	shot[currentShot].vy=0;
+	shot[currentShot].ax = Math.cos(rightShotRadians);
+	shot[currentShot].ay = Math.sin(rightShotRadians);
+	
+	shot[currentShot].x=player.x+Math.cos(rightShotRadians)*25;
+	shot[currentShot].y=player.y+Math.sin(rightShotRadians)* 25;
+
+	shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
+	shot[currentShot].vy += player.vy + shot[currentShot].ay * shot[currentShot].force;
+	
+	//shotDelay = fireRate;
+
+	currentShot++;
+	//----------------bullet reset-------------
+
+	if(currentShot>=maxShot)
+	{
+		currentShot =0;
+	}
 	//islands
 		//level 1
 		
