@@ -6,7 +6,7 @@ var interval;
 var player;
 
 //bullet vars
-var maxShot = 5000;
+var maxShot = 100;
 var eMaxShot = 100;
 var shot = [];
 var currentShot =0;
@@ -38,19 +38,19 @@ eShoot = true;
 
 	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);//rand(0,level.world.length-1)
 
-	for(var s =0; s <=maxShot;s++)
+	for(var sh =0; sh <=maxShot;sh++)
 	{
-		shot[s]= new GameObject({force:3,width:10,height:10,color:"#5a5a5a"});
-		shot[s].x=player.x;
-		shot[s].y=-100;
+		shot[sh]= new GameObject({force:3,width:10,height:10,color:"#5a5a5a"});
+		shot[sh].x=player.x;
+		shot[sh].y=-100;
 	}
 	//function generateShot(obj)
 	//{
-	for(var i =0; i <=eMaxShot;i++)
+	for(var esh =0; esh <=eMaxShot;esh++)
 	{
-		eShot[i]= new GameObject({force:3,width:10,height:10,color:"#c73232"});
-		eShot[i].x= -500;
-		eShot[i].y=-100;
+		eShot[esh]= new GameObject({force:3,width:10,height:10,color:"#c73232"});
+		eShot[esh].x= -500;
+		eShot[esh].y=-100;
 	}
 	//}
 	var fX = .85;
@@ -365,27 +365,32 @@ function animate()
 			hitCounter=iFrames;
 			}
 		}
-		if(eShot[i].hitTestObject(player))
+		for(esh=0;esh<eMaxShot;esh++)
 		{
-			eShot[i].vx=0;
-			eShot[i].vy=0;
-			eShot[i].x=-100;
-			eShot[i].y=-100;
+		if(eShot[esh].x>=player.right().x)
+		{
+			eShot[esh].vx=0;
+			eShot[esh].vy=0;
+			eShot[esh].x=-100;
+			eShot[esh].y=-100;
 			if(hitCounter<=0)
 			{
-			player.health-=level.bShip[e].damage;
-			hitCounter=iFrames;
+				player.health-=level.bShip[e].damage;
+				hitCounter=iFrames;
 			}
 		}
-		/*if(shot[s].hitTestPoint(bSides[i]))
+		}
+		for(sh=0;sh<maxShot;sh++)
+		{
+		if(shot[sh].x>=level.bShip[e].right().x&&shot[sh].x<=level.bShip[e].left().x&&shot[sh].y>=level.bShip[e].bottom().y&&shot[sh].y<=level.bShip[e].top().y)
 		{
 			level.bShip[e].health-=player.damage;
-			shot[s].x = -100;
-			shot[s].y = -100;
-			shot[s].vx = 0;
-			shot[s].vy = 0;
-		}*/
-		
+			shot[sh].x = -100;
+			shot[sh].y = -100;
+			shot[sh].vx = 0;
+			shot[sh].vy = 0;
+		}
+		}
 		//console.log(hitCounter);
 		
 	//islands
@@ -489,16 +494,15 @@ function animate()
 		player.force =0;
 	}*/
 	//make shots move for now
-	for(let s=0;s<currentShot;s++)
+	for(let sh=0;sh<currentShot;sh++)
 	{
-		shot[s].move();
-		shot[s].drawCircle();
-		shot[s].drawDebug();
+		shot[sh].move();
+		shot[sh].drawDebug();
 	}
 	for(let i=0;i<eCurrentShot;i++)
 	{
-		eShot[i].move();
-		eShot[i].drawCircle();
+		eShot[esh].move();
+		eShot[esh].drawCircle();
 	}
 	
 	//console.log(player.force);
