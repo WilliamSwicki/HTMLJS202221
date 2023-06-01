@@ -3,6 +3,7 @@ var a = false;
 var s = false;
 var d = false;
 var space = false;
+var eShoot = false
 
 
 document.addEventListener("keydown", press);
@@ -33,6 +34,10 @@ function press(e)
 	{
 		space = true;
 	}
+	if(e.keyCode == 186)
+	{
+		eShoot = true;
+	}
 }
 
 function release(e)
@@ -59,5 +64,9 @@ function release(e)
 	if(e.keyCode == 32)
 	{
 		space = false;
+	}
+	if(e.keyCode == 186)
+	{
+		eShoot = false;
 	}
 }
