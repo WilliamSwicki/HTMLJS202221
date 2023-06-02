@@ -22,6 +22,7 @@ var eFireRate = 30;
 var alive =0;
 var randItem;
 var itemGot = false;
+var rnd
 
 var iFrames = 150;
 var hitCounter = 0;
@@ -560,16 +561,19 @@ eShoot = true;
 			context.restore();
 			}
 
+
 			if(sides[i].x>canvas.width && alive<=0 && player.health>0) // add an extra conditnol to check for enemies
 			{
+				rnd= rand(0,level.world.length-1)
 				itemGot = false;
 				randItem = rand(0,item.pickItem.length-1);
-				console.log(randItem);
 				for(g = 0;g<level.grid.length; g++)
 				{
 				level.grid[g].x=level.grid[g].x - canvas.width; 
 				}
-				level.generate(level.world[rand(0,level.world.length-1)],50,50,0);
+				
+				
+				level.generate(level.world[rnd],50,50,0);
 				player.x= player.x - canvas.width + player.width
 				sides[i].x=sides[i].x- canvas.width + player.width
 				player.force=0
