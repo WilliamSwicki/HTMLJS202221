@@ -588,7 +588,7 @@ function animate()
 		eShot[esh].move();
 		eShot[esh].drawCircle();
 		//eShot[esh].drawDebug();
-	}console.log(item.oneUp.hitTestObject(player));
+	}
 	item.oneUp.drawRect();
 	item.plusDam.drawRect();
 	item.fastShoot.drawRect();
