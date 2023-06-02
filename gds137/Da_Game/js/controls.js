@@ -3,7 +3,8 @@ var a = false;
 var s = false;
 var d = false;
 var space = false;
-var eShoot = false
+var eShoot = false;
+var esc = false;
 
 
 document.addEventListener("keydown", press);
@@ -38,6 +39,10 @@ function press(e)
 	{
 		eShoot = true;
 	}
+	if(e.keyCode == 27)
+	{
+		esc = true;
+	}
 }
 
 function release(e)
@@ -68,5 +73,9 @@ function release(e)
 	if(e.keyCode == 186)
 	{
 		eShoot = false;
+	}
+	if(e.keyCode == 27)
+	{
+		esc = false;
 	}
 }

@@ -6,8 +6,9 @@ var interval;
 var player;
 var oneUp;
 
+var currentState = "menu";
+var states =[];
 
-//bullet vars
 var maxShot = 300;
 var eMaxShot = 100;
 var shot = [];
@@ -66,11 +67,29 @@ eShoot = true;
     interval = 1000/60;
 	timer = setInterval(animate, interval);
 
-function animate()
-{
-    context.clearRect(0,0,canvas.width, canvas.height);
-	
-	
+	states["menu"] = function()
+	{
+		context.save();
+		context.fillStyle = "black";
+		context.font = "bold 78px Arial"
+		context.textAlign = "center";
+		context.fillText("Boat Game", canvas.width/2, canvas.height/2+(78/4))
+	context.restore();
+	context.save();
+		context.fillStyle = "black";
+		context.font = "bold 20px Arial"
+		context.textAlign = "center";
+		context.fillText("Press space to play", canvas.width/2, canvas.height/2+50)
+	context.restore();
+	if(space)
+	{
+		currentState = "game";
+	}
+	}
+
+
+	states["game"] = function()
+	{
 		var radians = player.angle * Math.PI/180;
 		var leftShotRadians = (player.angle-90)*Math.PI/180;
 		var rightShotRadians = (player.angle+90)*Math.PI/180;
@@ -88,35 +107,35 @@ function animate()
 		//move on angle
 		player.vx += player.ax * player.force;
 		player.vy += player.ay * player.force;
-	//counters
-	hitCounter--;
-	//player movement
-	if(w)
-	{
+		//counters
+		hitCounter--;
+		//player movement
+		if(w)
+		{
 		if(player.force<1)
 		{
 		player.force+=player.accelerationSpeed;
 		}
-	}
-	if(s)
-	{
+		}
+		if(s)
+		{
 		if(player.force>0)
 		{
 		player.force-=player.accelerationSpeed;
 		}
-	}
-	if(a)
-	{
+		}
+		if(a)
+		{
 		player.angle-=player.rotationSpeed;
-	}
-	if(d)
-	{
+		}
+		if(d)
+		{
 		player.angle+=player.rotationSpeed;
-	}
+		}
 
-	shotDelay--;
-	if(space)
-	{
+		shotDelay--;
+		if(space)
+		{
 		if(shotDelay<=0)
 		{
 		//----------------left bullet--------------
@@ -150,8 +169,6 @@ function animate()
 
 		shot[currentShot].vx += player.vx + shot[currentShot].ax * shot[currentShot].force;
 		shot[currentShot].vy += player.vy + shot[currentShot].ay * shot[currentShot].force;
-		
-		//shotDelay = fireRate;
 
 		currentShot++;
 		//----------------bullet reset-------------
@@ -161,23 +178,21 @@ function animate()
 			currentShot =0;
 		}
 		}
-		//console.log(shot[currentShot].force);
-		//console.log(shot[currentShot].vy);
-		//console.log(shot[currentShot].ay);
-	}
-	//uncomment to allow spam fire
-	else
-	{
+
+		}
+		//uncomment to allow spam fire
+		else
+		{
 		//shotDelay =0;
-	}
+		}
 
-	player.vx *= fX;
-	player.vy *= fY;
+		player.vx *= fX;
+		player.vy *= fY;
 
-	player.x += Math.round(player.vx);
-	player.y += Math.round(player.vy);
+		player.x += Math.round(player.vx);
+		player.y += Math.round(player.vy);
 
-	var sides = [
+		var sides = [
 		player.right(),
 		player.top(),
 		player.bottom(),
@@ -186,13 +201,13 @@ function animate()
 		player.topRight(),
 		player.bottomLeft(),
 		player.bottomRight()
-	]
+		]
 	
 	
-	//wall colishion
-	//top bottom walls
-	for(let i=0; i<sides.length; i++)
-	{
+		//wall colishion
+		//top bottom walls
+		for(let i=0; i<sides.length; i++)
+		{
 		while(sides[i].y>canvas.height)
 		{
 			player.y--
@@ -523,11 +538,21 @@ function animate()
 				item.pickItem[randItem].x=canvas.width-100
 				item.pickItem[randItem].y= canvas.height/2
 			}
+			if(player.health<=0)
+			{
+				context.save();
+			context.fillStyle = "black";
+			context.font = "bold 20px Arial"
+			context.textAlign = "center";
+			context.fillText("You lost", canvas.width/2, canvas.height/2+(78/4))
+			context.restore();
+			}
 
 			if(sides[i].x>canvas.width && alive<=0 && player.health>0) // add an extra conditnol to check for enemies
 			{
 				itemGot = false;
 				randItem = rand(0,item.pickItem.length-1);
+				console.log(randItem);
 				for(g = 0;g<level.grid.length; g++)
 				{
 				level.grid[g].x=level.grid[g].x - canvas.width; 
@@ -575,24 +600,29 @@ function animate()
 		//level.shipTarget[e].drawCircle();
 		
 		}
-	}
+		}
 
-	//make shots move for now
-	for(let sh=0;sh<currentShot;sh++)
-	{
+		//make shots move for now
+		for(let sh=0;sh<currentShot;sh++)
+		{
 		shot[sh].move();
 		shot[sh].drawCircle();
-	}
-	for(let esh=0;esh<eCurrentShot;esh++)
-	{
+		}
+		for(let esh=0;esh<eCurrentShot;esh++)
+		{
 		eShot[esh].move();
 		eShot[esh].drawCircle();
 		//eShot[esh].drawDebug();
+		}
+		item.oneUp.drawRect();
+		item.plusDam.drawRect();
+		item.fastShoot.drawRect();
+		player.drawShip();
+		//console.log(level.x);
+		player.drawDebug();
 	}
-	item.oneUp.drawRect();
-	item.plusDam.drawRect();
-	item.fastShoot.drawRect();
-	player.drawShip();
-	//console.log(level.x);
-	player.drawDebug();
+	function animate()
+{
+    context.clearRect(0,0,canvas.width, canvas.height);
+	states[currentState]();
 }
