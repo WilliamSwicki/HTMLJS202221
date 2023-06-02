@@ -367,29 +367,29 @@ function animate()
 		}
 		for(esh=0;esh<eMaxShot;esh++)
 		{
-		if(eShot[esh].x>=player.right().x)
-		{
-			eShot[esh].vx=0;
-			eShot[esh].vy=0;
-			eShot[esh].x=-100;
-			eShot[esh].y=-100;
-			if(hitCounter<=0)
+			if(eShot[esh].x<=player.right().x&&eShot[esh].x>=player.left().x&&eShot[esh].y<=player.bottom().y&&eShot[esh].y>=player.top().y||eShot[esh].x>=player.right().x&&eShot[esh].x<=player.left().x&&eShot[esh].y>=player.bottom().y&&eShot[esh].y<=player.top().y)
 			{
-				player.health-=level.bShip[e].damage;
-				hitCounter=iFrames;
+				eShot[esh].vx=0;
+				eShot[esh].vy=0;
+				eShot[esh].x=-100;
+				eShot[esh].y=-100;
+				if(hitCounter<=0)
+				{
+					player.health-=level.bShip[e].damage;
+					hitCounter=iFrames;
+				}
 			}
-		}
 		}
 		for(sh=0;sh<maxShot;sh++)
 		{
-		if(shot[sh].x>=level.bShip[e].right().x&&shot[sh].x<=level.bShip[e].left().x&&shot[sh].y>=level.bShip[e].bottom().y&&shot[sh].y<=level.bShip[e].top().y)
-		{
-			level.bShip[e].health-=player.damage;
-			shot[sh].x = -100;
-			shot[sh].y = -100;
-			shot[sh].vx = 0;
-			shot[sh].vy = 0;
-		}
+			if(shot[sh].x>=level.bShip[e].right().x&&shot[sh].x<=level.bShip[e].left().x&&shot[sh].y>=level.bShip[e].bottom().y&&shot[sh].y<=level.bShip[e].top().y||shot[sh].x<=level.bShip[e].right().x&&shot[sh].x>=level.bShip[e].left().x&&shot[sh].y<=level.bShip[e].bottom().y&&shot[sh].y>=level.bShip[e].top().y)
+			{
+				level.bShip[e].health-=player.damage;
+				shot[sh].x = -100;
+				shot[sh].y = -100;
+				shot[sh].vx = 0;
+				shot[sh].vy = 0;
+			}
 		}
 		//console.log(hitCounter);
 		
@@ -499,10 +499,11 @@ function animate()
 		shot[sh].move();
 		shot[sh].drawDebug();
 	}
-	for(let i=0;i<eCurrentShot;i++)
+	for(let esh=0;esh<eCurrentShot;esh++)
 	{
 		eShot[esh].move();
 		eShot[esh].drawCircle();
+		eShot[esh].drawDebug();
 	}
 	
 	//console.log(player.force);
