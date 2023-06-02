@@ -81,6 +81,18 @@ eShoot = true;
 		context.textAlign = "center";
 		context.fillText("Press space to play", canvas.width/2, canvas.height/2+50)
 	context.restore();
+	context.save();
+		context.fillStyle = "black";
+		context.font = "bold 16px Arial"
+		context.textAlign = "center";
+		context.fillText("Controls: w - accelrate s -deccelrate a - rotate counter clockwise d - rotate clockwise space - shoot", canvas.width/2, canvas.height/2+90)
+	context.restore();
+	context.save();
+		context.fillStyle = "black";
+		context.font = "bold 16px Arial"
+		context.textAlign = "center";
+		context.fillText("Items: green: +1 health red: +1 damage blue: +2 fire rate", canvas.width/2, canvas.height/2+130)
+	context.restore();
 	if(space)
 	{
 		currentState = "game";
