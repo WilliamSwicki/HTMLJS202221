@@ -16,14 +16,13 @@ function GameObject(obj)
 		this.angleRotate =0;
 		this.rotationSpeed = 2;
 		this.accelerationSpeed =1;
-		this.dx;
-		this.dy;
+		this.dx=0;
+		this.dy=0;
 
 	//whether or not the object can jump
 	this.canJump = false;
 	this.jumpHeight = -25;
 	//var for combat
-	this.alive =0;
 	this.damage = 1;
 	this.health = 5;
 	

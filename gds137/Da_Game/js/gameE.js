@@ -4,9 +4,11 @@ var context;
 var timer;
 var interval;
 var player;
+var oneUp;
+
 
 //bullet vars
-var maxShot = 100;
+var maxShot = 300;
 var eMaxShot = 100;
 var shot = [];
 var currentShot =0;
@@ -16,6 +18,9 @@ var shotDelay = 0;
 var fireRate = 30;
 var eShotDelay = 0;
 var eFireRate = 30;
+var alive =0;
+var randItem;
+var itemGot = false;
 
 var iFrames = 150;
 var hitCounter = 0;
@@ -33,9 +38,12 @@ eShoot = true;
 	player.force=0;
 	player.accelerationSpeed= 0.02;
 	player.color = "brown";
+	player.damage = 1;
 
 	var level = new Level();
-
+	var item = new Item();
+	randItem=rand(0,item.pickItem.length-1)
+	
 	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);//rand(0,level.world.length-1)
 	for(var sh =0; sh <=maxShot;sh++)
 	{
@@ -61,7 +69,8 @@ eShoot = true;
 function animate()
 {
     context.clearRect(0,0,canvas.width, canvas.height);
-
+	
+	
 		var radians = player.angle * Math.PI/180;
 		var leftShotRadians = (player.angle-90)*Math.PI/180;
 		var rightShotRadians = (player.angle+90)*Math.PI/180;
@@ -196,9 +205,9 @@ function animate()
 			sides[i].y++
 		}	
 
-	//left right walls
+		//left right walls
 		
-	//the right side is on line 476
+		//the right side is on line 476
 
 		while(sides[i].x<0)
 		{
@@ -206,11 +215,11 @@ function animate()
 			sides[i].x++
 		}	
 	
-	for(var e=0;e<level.bShip.length;e++)
-	{	
+		for(var e=0;e<level.bShip.length;e++)
+		{	
 		eShotDelay--
-	if(eShoot)
-	{
+		if(eShoot)
+		{
 		if(eShotDelay<0)
 		{
 			//----------------left bullet--------------
@@ -229,7 +238,7 @@ function animate()
 			eShot[eCurrentShot].vx += eShot[eCurrentShot].ax * eShot[eCurrentShot].force;
 			eShot[eCurrentShot].vy += eShot[eCurrentShot].ay * eShot[eCurrentShot].force;
 		
-			eShotDelay = fireRate*16;
+			eShotDelay = eFireRate*16;
 
 			eCurrentShot++;
 			//------------------right bullet-------------
@@ -245,16 +254,16 @@ function animate()
 			eShot[eCurrentShot].vx += eShot[eCurrentShot].ax * eShot[eCurrentShot].force;
 			eShot[eCurrentShot].vy += eShot[eCurrentShot].ay * eShot[eCurrentShot].force;
 		
-			eShotDelay = fireRate*16;
+			eShotDelay = eFireRate*16;
 
 			eCurrentShot++;
 			//----------------bullet reset-------------
-}
+			}
 			if(eCurrentShot>=eMaxShot)
 			{
 				eCurrentShot =0;
 			}
-	}
+		}
 
 		for(var g = 0; g < level.grid.length; g++)
 		{
@@ -365,9 +374,9 @@ function animate()
 		for(esh=0;esh<eMaxShot;esh++)
 		{
 			if(eShot[esh].y<0||eShot[esh]>canvas.height)
-	{
+		{
 		eShot[esh].y=-30;
-	}	
+		}	
 			if(eShot[esh].x<=player.right().x&&eShot[esh].x>=player.left().x&&eShot[esh].y<=player.bottom().y&&eShot[esh].y>=player.top().y||eShot[esh].x>=player.right().x&&eShot[esh].x<=player.left().x&&eShot[esh].y>=player.bottom().y&&eShot[esh].y<=player.top().y)
 			{
 				eShot[esh].vx=0;
@@ -392,7 +401,7 @@ function animate()
 				shot[sh].vy = 0;
 				if(level.bShip[e].health<=0)
 				{
-					level.bShip[e].alive--
+					alive--
 					level.bShip[e].x=500
 					level.bShip[e].y=-500
 					level.shipTarget[e].x=500
@@ -400,9 +409,9 @@ function animate()
 				}
 			}
 		}
-	//---------------player and enemy ship health--------------
-	switch(player.health)
-	{
+		//---------------player and enemy ship health--------------
+		switch(player.health)
+		{
 		case 4:
 			player.teamColor="#0000bc";
 			break;
@@ -420,9 +429,9 @@ function animate()
 				break;
 		default:
 			player.teamColor=player.teamColor;
-	}
-	switch(level.bShip[e].health)
-	{
+		}
+		switch(level.bShip[e].health)
+		{
 		case 4:
 			level.bShip[e].teamColor="#ba0000";
 			break;
@@ -440,9 +449,9 @@ function animate()
 			break;
 		default:
 			level.bShip[e].teamColor="red";
-	}
+		}
 		
-	//islands
+		//islands
 		//level 1
 		
 			level.grid[g].drawRect();
@@ -507,17 +516,22 @@ function animate()
 					bSides[i].y++
 					level.shipTarget[e].angleRotate-=1;
 				}
-			}
+			}			
 			
-			
-			if(sides[i].x>canvas.width && level.bShip[e].alive<=0 && player.health>0) // add an extra conditnol to check for enemies
+			if(alive<=0&&!itemGot)
 			{
-				
+				item.pickItem[randItem].x=canvas.width-100
+				item.pickItem[randItem].y= canvas.height/2
+			}
+
+			if(sides[i].x>canvas.width && alive<=0 && player.health>0) // add an extra conditnol to check for enemies
+			{
+				itemGot = false;
+				randItem = rand(0,item.pickItem.length-1);
 				for(g = 0;g<level.grid.length; g++)
 				{
 				level.grid[g].x=level.grid[g].x - canvas.width; 
 				}
-
 				level.generate(level.world[rand(0,level.world.length-1)],50,50,0);
 				player.x= player.x - canvas.width + player.width
 				sides[i].x=sides[i].x- canvas.width + player.width
@@ -528,6 +542,29 @@ function animate()
 				player.x--
 				sides[i].x--
 			}
+			//--------item colishion---------
+			if(item.oneUp.hitTestObject(player))
+			{
+				itemGot = true;
+				player.health++;
+				item.oneUp.x = -100;
+				item.oneUp.y = -100;
+			}
+			if(item.plusDam.hitTestObject(player))
+			{
+				itemGot = true;
+				player.damage++;
+				item.plusDam.x = -100;
+				item.plusDam.y = -100;
+			}
+			if(item.fastShoot.hitTestObject(player))
+			{
+				itemGot = true;
+				fireRate-=2;
+				item.fastShoot.y = -100;
+				item.fastShoot.x = -100;
+			}
+			
 		}
 		if(level.bShip[e].health>0)
 		{
@@ -535,20 +572,11 @@ function animate()
 		}
 		level.bShip[e].drawShip();
 		level.bShip[e].drawDebug();
-		level.shipTarget[e].drawCircle();
-		//console.log(player.health);
+		//level.shipTarget[e].drawCircle();
 		
-	}		//level.grid[g].drawDebug();
-
+		}
 	}
 
-	/*
-	-----This works for items-----
-	while(island.hitTestObject(player))
-	{
-		player.x--;
-		player.force =0;
-	}*/
 	//make shots move for now
 	for(let sh=0;sh<currentShot;sh++)
 	{
@@ -560,10 +588,11 @@ function animate()
 		eShot[esh].move();
 		eShot[esh].drawCircle();
 		//eShot[esh].drawDebug();
-	}
-	
-	//console.log(player.force);
-    player.drawShip();
+	}console.log(item.oneUp.hitTestObject(player));
+	item.oneUp.drawRect();
+	item.plusDam.drawRect();
+	item.fastShoot.drawRect();
+	player.drawShip();
 	//console.log(level.x);
 	player.drawDebug();
 }

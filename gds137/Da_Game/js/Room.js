@@ -35,7 +35,7 @@ function Level()
         [0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0],
         [2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
         [2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],
 ]
@@ -129,7 +129,7 @@ function Level()
                         this.bShip[e].y=y;
                         this.bShip[e].color = "brown";
                         this.bShip[e].teamColor = "red";
-                        this.bShip[e].alive++;
+                        alive++;
                         this.shipTarget[e] =new GameObject({width:15,height:15});
                         this.shipTarget[e].x=this.bShip[e].x;
                         this.shipTarget[e].y=this.bShip[e].y;
