@@ -101,7 +101,6 @@ function Level()
 
         var g =0;
         var e =0;
-        var eAlive =0;
         var x = tileWidth/2+(canvas.width*offset);
         var y = tileHeight/2;
 
@@ -130,7 +129,7 @@ function Level()
                         this.bShip[e].y=y;
                         this.bShip[e].color = "brown";
                         this.bShip[e].teamColor = "red";
-                        eAlive++;
+                        this.bShip[e].alive++;
                         this.shipTarget[e] =new GameObject({width:15,height:15});
                         this.shipTarget[e].x=this.bShip[e].x;
                         this.shipTarget[e].y=this.bShip[e].y;

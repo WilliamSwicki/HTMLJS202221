@@ -23,6 +23,7 @@ function GameObject(obj)
 	this.canJump = false;
 	this.jumpHeight = -25;
 	//var for combat
+	this.alive =0;
 	this.damage = 1;
 	this.health = 5;
 	

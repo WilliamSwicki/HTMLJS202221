@@ -37,7 +37,6 @@ eShoot = true;
 	var level = new Level();
 
 	level.generate(level.world[rand(0,level.world.length-1)],50,50,0);//rand(0,level.world.length-1)
-
 	for(var sh =0; sh <=maxShot;sh++)
 	{
 		shot[sh]= new GameObject({force:3,width:10,height:10,color:"#5a5a5a"});
@@ -199,11 +198,7 @@ function animate()
 
 	//left right walls
 		
-		while(sides[i].x>canvas.width)
-		{
-			player.x--
-			sides[i].x--
-		}
+	//the right side is on line 476
 
 		while(sides[i].x<0)
 		{
@@ -234,7 +229,7 @@ function animate()
 			eShot[eCurrentShot].vx += eShot[eCurrentShot].ax * eShot[eCurrentShot].force;
 			eShot[eCurrentShot].vy += eShot[eCurrentShot].ay * eShot[eCurrentShot].force;
 		
-			eShotDelay = fireRate*8;
+			eShotDelay = fireRate*16;
 
 			eCurrentShot++;
 			//------------------right bullet-------------
@@ -250,7 +245,7 @@ function animate()
 			eShot[eCurrentShot].vx += eShot[eCurrentShot].ax * eShot[eCurrentShot].force;
 			eShot[eCurrentShot].vy += eShot[eCurrentShot].ay * eShot[eCurrentShot].force;
 		
-			eShotDelay = fireRate*8;
+			eShotDelay = fireRate*16;
 
 			eCurrentShot++;
 			//----------------bullet reset-------------
@@ -260,7 +255,6 @@ function animate()
 				eCurrentShot =0;
 			}
 	}
-		
 
 		for(var g = 0; g < level.grid.length; g++)
 		{
@@ -293,43 +287,46 @@ function animate()
 		
 		//-----------target point colishions----------
 		//top bottom
-		while(bSides[i].y>canvas.height)
+		if(level.bShip[e].health>0)
 		{
-			level.shipTarget[e].y--
-			bSides[i].y--
-			level.bShip[e].y--
-		}	
+			while(bSides[i].y>canvas.height)
+			{
+				level.shipTarget[e].y--
+				bSides[i].y--
+				level.bShip[e].y--
+			}	
 
-		while(bSides[i].y<0)
-		{
-			level.shipTarget[e].y++
-			bSides[i].y++
-			level.bShip[e].y++
-		}
+			while(bSides[i].y<0)
+			{
+				level.shipTarget[e].y++
+				bSides[i].y++
+				level.bShip[e].y++
+			}
 		//left right
-		while(bSides[i].x>canvas.width)
-		{
-			level.shipTarget[e].x--
-			bSides[i].x--
-			level.bShip[e].x--
-		}
+			while(bSides[i].x>canvas.width)
+			{
+				level.shipTarget[e].x--
+				bSides[i].x--
+				level.bShip[e].x--
+			}
 
-		while(bSides[i].x<0)
-		{
-			level.shipTarget[e].x++
-			bSides[i].x++
-			level.bShip[e].x++
-		}	
+			while(bSides[i].x<0)
+			{
+				level.shipTarget[e].x++
+				bSides[i].x++
+				level.bShip[e].x++
+			}	
 
-		if(dist>150)
-		{
-			level.shipTarget[e].x+=0;
-			level.shipTarget[e].y+=0;
-		}
-		else
-		{
-		level.shipTarget[e].x+=tdx/300;
-		level.shipTarget[e].y+=tdy/300;
+			if(dist>150)
+			{
+				level.shipTarget[e].x+=0;
+				level.shipTarget[e].y+=0;
+			}
+			else
+			{
+				level.shipTarget[e].x+=tdx/300;
+				level.shipTarget[e].y+=tdy/300;
+			}
 		}
 		/*if(dist<=150)
 		{
@@ -367,6 +364,10 @@ function animate()
 		}
 		for(esh=0;esh<eMaxShot;esh++)
 		{
+			if(eShot[esh].y<0||eShot[esh]>canvas.height)
+	{
+		eShot[esh].y=-30;
+	}	
 			if(eShot[esh].x<=player.right().x&&eShot[esh].x>=player.left().x&&eShot[esh].y<=player.bottom().y&&eShot[esh].y>=player.top().y||eShot[esh].x>=player.right().x&&eShot[esh].x<=player.left().x&&eShot[esh].y>=player.bottom().y&&eShot[esh].y<=player.top().y)
 			{
 				eShot[esh].vx=0;
@@ -389,9 +390,57 @@ function animate()
 				shot[sh].y = -100;
 				shot[sh].vx = 0;
 				shot[sh].vy = 0;
+				if(level.bShip[e].health<=0)
+				{
+					level.bShip[e].alive--
+					level.bShip[e].x=500
+					level.bShip[e].y=-500
+					level.shipTarget[e].x=500
+					level.shipTarget[e].y-499
+				}
 			}
 		}
-		//console.log(hitCounter);
+	//---------------player and enemy ship health--------------
+	switch(player.health)
+	{
+		case 4:
+			player.teamColor="#0000bc";
+			break;
+		case 3:
+			player.teamColor="#000060";
+			break;
+		case 2:
+			player.teamColor="#000039";
+			break;
+		case 1:
+			player.teamColor="#00000b";
+			break;
+			case 0:
+				player.teamColor="#000000";
+				break;
+		default:
+			player.teamColor=player.teamColor;
+	}
+	switch(level.bShip[e].health)
+	{
+		case 4:
+			level.bShip[e].teamColor="#ba0000";
+			break;
+		case 3:
+			level.bShip[e].teamColor="#6b0000";
+			break;
+		case 2:
+			level.bShip[e].teamColor="#320000";
+			break;
+		case 1:
+			level.bShip[e].teamColor="#110000";
+			break;
+		case 0:
+			level.bShip[e].teamColor="#000000";
+			break;
+		default:
+			level.bShip[e].teamColor="red";
+	}
 		
 	//islands
 		//level 1
@@ -461,7 +510,7 @@ function animate()
 			}
 			
 			
-			if(sides[i].x>canvas.width && eAlive==0) // add an extra conditnol to check for enemies
+			if(sides[i].x>canvas.width && level.bShip[e].alive<=0 && player.health>0) // add an extra conditnol to check for enemies
 			{
 				
 				for(g = 0;g<level.grid.length; g++)
@@ -474,14 +523,21 @@ function animate()
 				sides[i].x=sides[i].x- canvas.width + player.width
 				player.force=0
 			}
+			if(sides[i].x>canvas.width)
+			{
+				player.x--
+				sides[i].x--
+			}
 		}
-			level.bShip[e].move();
-		
+		if(level.bShip[e].health>0)
+		{
+		level.bShip[e].move();
+		}
 		level.bShip[e].drawShip();
 		level.bShip[e].drawDebug();
 		level.shipTarget[e].drawCircle();
-		console.log(level.bShip[e].health);
-		//console.log(player.damage);
+		//console.log(player.health);
+		
 	}		//level.grid[g].drawDebug();
 
 	}
@@ -497,13 +553,13 @@ function animate()
 	for(let sh=0;sh<currentShot;sh++)
 	{
 		shot[sh].move();
-		shot[sh].drawDebug();
+		shot[sh].drawCircle();
 	}
 	for(let esh=0;esh<eCurrentShot;esh++)
 	{
 		eShot[esh].move();
 		eShot[esh].drawCircle();
-		eShot[esh].drawDebug();
+		//eShot[esh].drawDebug();
 	}
 	
 	//console.log(player.force);
